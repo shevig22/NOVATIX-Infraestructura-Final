@@ -1,0 +1,453 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram id="novatix-deploy-v2" name="3 - Despliegue">
+    <mxGraphModel dx="8061" dy="5122" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2500" pageHeight="1550" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="private" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#94A3B8;strokeWidth=1.5;dashed=1;verticalAlign=top;spacingTop=10;fontSize=14;fontColor=#475569;" value="&lt;b&gt;RED PRIVADA ENTRE MÁQUINAS VIRTUALES · 192.168.100.0/24&lt;/b&gt;" vertex="1">
+          <mxGeometry height="4530" width="3450" x="-1050" y="-2290" as="geometry" />
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-19" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="2465" width="730" x="1140" y="-270" as="geometry" />
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-17" connectable="0" parent="o2po6v7nAyWXlfKl177D-19" style="group" value="" vertex="1">
+          <mxGeometry height="2465" width="730" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="u2" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=2;verticalAlign=top;spacingTop=18;fontSize=19;fontColor=#0F172A;" value="&lt;b&gt;UBUNTU 2&lt;/b&gt;&lt;br&gt;192.168.100.3&lt;br&gt;&lt;font color=&#39;#64748b&#39;&gt;Manager + Worker&lt;/font&gt;" vertex="1">
+          <mxGeometry height="2465" width="730" as="geometry" />
+        </mxCell>
+        <mxCell id="haproxy" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;HAProxy&lt;/b&gt;&lt;br&gt;Entrada HTTP · puerto 8080" vertex="1">
+          <mxGeometry height="91.07142857142857" width="260" x="232.5" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="frontend" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Frontend React&lt;/b&gt;&lt;br&gt;Interfaz web" vertex="1">
+          <mxGeometry height="85" width="260" x="235" y="626.5714285714286" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_bets" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Apuestas&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3000" vertex="1">
+          <mxGeometry height="60.714285714285715" width="540" x="82.5" y="1624.7142857142858" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_money" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Dinero&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3003" vertex="1">
+          <mxGeometry height="60.714285714285715" width="540" x="80" y="1815.357142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="master" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Apache Spark Master&lt;/b&gt;&lt;br&gt;Coordinación · TCP 7077" vertex="1">
+          <mxGeometry height="87.42857142857143" width="260" x="222.5" y="2173.5714285714284" as="geometry" />
+        </mxCell>
+        <mxCell id="w2" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Apache Spark Worker 2&lt;/b&gt;&lt;br&gt;Ejecutor del clúster" vertex="1">
+          <mxGeometry height="87.42857142857143" width="260" x="220" y="1979.285714285714" as="geometry" />
+        </mxCell>
+        <mxCell id="sparkui" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Interfaz analítica Spark&lt;/b&gt;&lt;br&gt;HTTP · puerto 8090" vertex="1">
+          <mxGeometry height="66.78571428571428" width="545" x="95" y="2331.4285714285716" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_teams" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Equipos&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3004" vertex="1">
+          <mxGeometry height="60.714285714285715" width="540" x="80" y="1275" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_users" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Usuarios&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3001" vertex="1">
+          <mxGeometry height="60.714285714285715" width="540" x="68" y="1105" as="geometry" />
+        </mxCell>
+        <mxCell id="swarm" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=14;fontColor=#512E5F;align=center;verticalAlign=middle;" value="&lt;b&gt;Docker Swarm Manager&lt;/b&gt;&lt;br&gt;Orquestación del clúster" vertex="1">
+          <mxGeometry height="91.07142857142857" width="260" x="235" y="206.42857142857142" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Backend del Dashboard&lt;/b&gt;&lt;br&gt;Node.js / Express" vertex="1">
+          <mxGeometry height="85" width="260" x="232.5" y="822.0714285714284" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_matches" parent="o2po6v7nAyWXlfKl177D-17" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Partidos&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3002" vertex="1">
+          <mxGeometry height="60.714285714285715" width="540" x="72.5" y="1444.9999999999998" as="geometry" />
+        </mxCell>
+        <mxCell id="front_hap" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="frontend" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=2;dashed=0;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="haproxy" value="HTTP · API REST">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="580" />
+              <mxPoint x="340" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="master_w2" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="master" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#0F766E;strokeWidth=1.8;dashed=0;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="w2" value="Coordinación Spark">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hap_u2_money" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="u2_teams" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;entryX=1;entryY=0.5;" target="u2_money" value="Balanceo a Ubuntu2">
+          <mxGeometry relative="1" x="0.0492" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="1365" />
+              <mxPoint x="770" y="1365" />
+              <mxPoint x="770" y="1845.7" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u2_users" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="u2_users" value="Balanceo a Ubuntu2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="swarm_u2" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="swarm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#7C3AED;strokeWidth=1.5;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u2_users" value="Control de servicios">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-7" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0.297;exitY=0.013;exitDx=0;exitDy=0;exitPerimeter=0;" target="swarm" value="">
+          <mxGeometry relative="1" x="-0.2697" as="geometry">
+            <Array as="points">
+              <mxPoint x="309.72" y="365" />
+              <mxPoint x="309.72" y="365" />
+            </Array>
+            <mxPoint x="430" y="477.21428571428567" as="sourcePoint" />
+            <mxPoint x="-150" y="1375.7857142857142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-9" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;" target="dash" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="470.5" />
+              <mxPoint x="190" y="910.7" />
+              <mxPoint x="362.5" y="910.7" />
+            </Array>
+            <mxPoint x="233" y="471.1428571428571" as="sourcePoint" />
+            <mxPoint x="622" y="1244.642857142857" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u2_teams" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="dash" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;entryX=1;entryY=0.5;" target="u2_teams" value="Balanceo a Ubuntu2">
+          <mxGeometry relative="1" x="-0.5272" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="995" />
+              <mxPoint x="890" y="995" />
+              <mxPoint x="890" y="1305.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-10" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;" target="dash" value="">
+          <mxGeometry relative="1" x="0.1408" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="470.5" />
+              <mxPoint x="170" y="669.1" />
+              <mxPoint x="362.5" y="669.1" />
+            </Array>
+            <mxPoint x="233" y="471.1428571428571" as="sourcePoint" />
+            <mxPoint x="353" y="1214.2857142857142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-4" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="dash" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u2_teams" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="586.5" as="sourcePoint" />
+            <mxPoint x="635" y="1633.2142857142858" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u2_matches" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=1;entryY=0.5;exitDx=0;exitDy=0;" target="u2_matches" value="Balanceo a Ubuntu2">
+          <mxGeometry relative="1" x="-0.1274" as="geometry">
+            <Array as="points">
+              <mxPoint x="642.5" y="470.5" />
+              <mxPoint x="642.5" y="1475.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-12" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="w2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#0F766E;strokeWidth=1.8;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u2_matches" value="">
+          <mxGeometry relative="1" x="-0.4453" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="2022.9999999999998" />
+              <mxPoint x="60" y="1475.357142857143" />
+            </Array>
+            <mxPoint x="350" y="1979.285714285714" as="sourcePoint" />
+            <mxPoint x="363" y="907.0714285714286" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spark_dash" edge="1" parent="o2po6v7nAyWXlfKl177D-17" source="u2_matches" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#0F766E;strokeWidth=1.8;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" target="dash" value="Reporte JSON → API del Dashboard">
+          <mxGeometry relative="1" x="-0.476" as="geometry">
+            <Array as="points">
+              <mxPoint x="207.5" y="1420" />
+              <mxPoint x="40" y="1420" />
+              <mxPoint x="40" y="864.6" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u2_infra_lbl" parent="o2po6v7nAyWXlfKl177D-19" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#475569;" value="&lt;b&gt;Servicios de infraestructura&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48.57142857142857" width="580" x="75" y="121.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="u2_svc_lbl" parent="o2po6v7nAyWXlfKl177D-19" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#475569;" value="&lt;b&gt;Contenedores de microservicios&lt;/b&gt;&lt;br&gt;2 réplicas por servicio" vertex="1">
+          <mxGeometry height="54.642857142857146" width="580" x="52.5" y="978.7142857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-18" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="1520" width="680" y="-1900" as="geometry" />
+        </mxCell>
+        <mxCell id="u3" parent="o2po6v7nAyWXlfKl177D-18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=2;verticalAlign=top;spacingTop=18;fontSize=19;fontColor=#0F172A;" value="&lt;b&gt;UBUNTU 3&lt;/b&gt;&lt;br&gt;192.168.100.4&lt;br&gt;&lt;font color=&#39;#64748b&#39;&gt;Persistencia&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1520" width="680" as="geometry" />
+        </mxCell>
+        <mxCell id="db_lbl" parent="o2po6v7nAyWXlfKl177D-18" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#475569;" value="&lt;b&gt;Cinco instancias MySQL independientes&lt;/b&gt;" vertex="1">
+          <mxGeometry height="45" width="610" x="45" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="db_users" parent="o2po6v7nAyWXlfKl177D-18" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;MySQL Usuarios&lt;/b&gt;&lt;br&gt;TCP 3306" vertex="1">
+          <mxGeometry height="70" width="460" x="185" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="db_matches" parent="o2po6v7nAyWXlfKl177D-18" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;MySQL Partidos&lt;/b&gt;&lt;br&gt;TCP 3306" vertex="1">
+          <mxGeometry height="70" width="460" x="185" y="657" as="geometry" />
+        </mxCell>
+        <mxCell id="db_bets" parent="o2po6v7nAyWXlfKl177D-18" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;MySQL Apuestas&lt;/b&gt;&lt;br&gt;TCP 3306" vertex="1">
+          <mxGeometry height="70" width="460" x="35" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="db_money" parent="o2po6v7nAyWXlfKl177D-18" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;MySQL Dinero&lt;/b&gt;&lt;br&gt;TCP 3306" vertex="1">
+          <mxGeometry height="70" width="460" x="175" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="volumes" parent="o2po6v7nAyWXlfKl177D-18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#AAB7C4;fontSize=12;fontColor=#334155;align=left;verticalAlign=middle;spacing=10;" value="&lt;b&gt;Volúmenes Docker persistentes&lt;/b&gt;&lt;br&gt;Un volumen independiente por base de datos" vertex="1">
+          <mxGeometry height="95" width="570" x="65" y="1370" as="geometry" />
+        </mxCell>
+        <mxCell id="db_csv_anchor" parent="o2po6v7nAyWXlfKl177D-18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;Datos operacionales NOVATIX&lt;/b&gt;&lt;br&gt;Conjuntos almacenados en MySQL" vertex="1">
+          <mxGeometry height="55" width="570" x="65" y="1265" as="geometry" />
+        </mxCell>
+        <mxCell id="db_teams" parent="o2po6v7nAyWXlfKl177D-18" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=13;fontColor=#663300;align=center;verticalAlign=middle;" value="&lt;b&gt;MySQL Equipos&lt;/b&gt;&lt;br&gt;TCP 3306" vertex="1">
+          <mxGeometry height="70" width="460" x="35" y="458" as="geometry" />
+        </mxCell>
+        <mxCell id="db_vol" edge="1" parent="o2po6v7nAyWXlfKl177D-18" source="db_money" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.3;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="volumes" value="Persistencia de datos">
+          <mxGeometry relative="1" x="0.4935" as="geometry">
+            <Array as="points">
+              <mxPoint x="655" y="1075" />
+              <mxPoint x="655" y="1340" />
+              <mxPoint x="480" y="1340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u1_matches" edge="1" parent="o2po6v7nAyWXlfKl177D-18" source="db_teams" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_matches" value="SQL · TCP 3306">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sql_u1_bets" edge="1" parent="o2po6v7nAyWXlfKl177D-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.1269" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1275" y="2810" />
+            </Array>
+            <mxPoint x="1275" y="2800.7142860000004" as="sourcePoint" />
+            <mxPoint x="160" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u2_teams" edge="1" parent="o2po6v7nAyWXlfKl177D-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.0081" as="geometry">
+            <Array as="points">
+              <mxPoint x="1710" y="2922" />
+              <mxPoint x="1710" y="2415" />
+            </Array>
+            <mxPoint x="1560" y="2922" as="sourcePoint" />
+            <mxPoint x="65" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u2_matches" edge="1" parent="o2po6v7nAyWXlfKl177D-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="-0.0604" as="geometry">
+            <Array as="points">
+              <mxPoint x="1295" y="3030" />
+              <mxPoint x="1645" y="3030" />
+              <mxPoint x="1645" y="2650" />
+            </Array>
+            <mxPoint x="1295" y="3090" as="sourcePoint" />
+            <mxPoint x="470" y="727" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-14" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="1750" width="650" x="-970" y="-153.95999999999998" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=2;verticalAlign=top;spacingTop=18;fontSize=19;fontColor=#0F172A;" value="&lt;b&gt;UBUNTU 1&lt;/b&gt;&lt;br&gt;192.168.100.2&lt;br&gt;&lt;font color=&#39;#64748b&#39;&gt;Worker&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1750" width="650" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_lbl" parent="o2po6v7nAyWXlfKl177D-14" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#475569;" value="&lt;b&gt;Contenedores de microservicios&lt;/b&gt;&lt;br&gt;2 réplicas por servicio" vertex="1">
+          <mxGeometry height="57.06521739130435" width="580" x="35" y="152.17391304347828" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_users" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Usuarios&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3001" vertex="1">
+          <mxGeometry height="83.69565217391305" width="540" x="55" y="329.71014492753625" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_teams" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Equipos&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3004" vertex="1">
+          <mxGeometry height="83.69565217391305" width="540" x="55" y="533.8768115942029" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_bets" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Apuestas&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3000" vertex="1">
+          <mxGeometry height="83.69565217391305" width="540" x="55" y="943.4782608695652" as="geometry" />
+        </mxCell>
+        <mxCell id="w1" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Apache Spark Worker 1&lt;/b&gt;&lt;br&gt;Ejecutor del clúster Spark" vertex="1">
+          <mxGeometry height="98.91304347826087" width="540" x="55" y="1356.8840579710145" as="geometry" />
+        </mxCell>
+        <mxCell id="u1overlay" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=14;fontColor=#512E5F;align=center;verticalAlign=middle;" value="Docker Engine&lt;br&gt;Conectado a red Overlay" vertex="1">
+          <mxGeometry height="82.42753623188406" width="540" x="55" y="1572.4637681159422" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_money" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Dinero&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3003" vertex="1">
+          <mxGeometry height="83.69565217391305" width="540" x="55" y="1153.985507246377" as="geometry" />
+        </mxCell>
+        <mxCell id="u1_matches" parent="o2po6v7nAyWXlfKl177D-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;fontColor=#274E13;align=center;verticalAlign=middle;" value="&lt;b&gt;Partidos&lt;/b&gt;&lt;br&gt;2 réplicas · Puerto interno 3002" vertex="1">
+          <mxGeometry height="83.69565217391305" width="540" x="55" y="738.0434782608696" as="geometry" />
+        </mxCell>
+        <mxCell id="swarm_u1" edge="1" parent="o2po6v7nAyWXlfKl177D-14" source="u1_money" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#7C3AED;strokeWidth=1.5;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u1overlay" value="Control / programación">
+          <mxGeometry relative="1" x="0.6396" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="25" y="1195.8333333333335" />
+              <mxPoint x="25" y="1496.376811594203" />
+              <mxPoint x="325" y="1496.376811594203" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-3" edge="1" parent="o2po6v7nAyWXlfKl177D-14" source="u1_bets" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u1_matches" value="">
+          <mxGeometry relative="1" x="-0.01" as="geometry">
+            <Array as="points" />
+            <mxPoint x="325" y="932.0652173913044" as="sourcePoint" />
+            <mxPoint x="1680" y="735.5072463768116" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u1_matches" edge="1" parent="o2po6v7nAyWXlfKl177D-14" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0.25;exitY=1;entryX=1;entryY=0.5;exitDx=0;exitDy=0;" value="Balanceo a Ubuntu1">
+          <mxGeometry relative="1" x="-0.1585" as="geometry">
+            <Array as="points">
+              <mxPoint x="2407.5" y="463.96" />
+              <mxPoint x="1497.5" y="463.96" />
+              <mxPoint x="1497.5" y="793.86" />
+            </Array>
+            <mxPoint x="1497.5" y="510.00142899999986" as="sourcePoint" />
+            <mxPoint x="595" y="793.8213039999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#172B4D;" value="NOVATIX — Diagrama de despliegue de infraestructura" vertex="1">
+          <mxGeometry height="45" width="2320" x="-1120" y="-2420" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#475569;" value="Tres nodos Ubuntu · Red privada 192.168.100.0/24 · Red lógica Docker Overlay 10.77.0.0/24" vertex="1">
+          <mxGeometry height="30" width="2320" x="-345" y="-2340" as="geometry" />
+        </mxCell>
+        <mxCell id="csv" parent="1" style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=14;fontColor=#5C4B00;align=center;verticalAlign=middle;" value="&lt;b&gt;Archivos CSV sintéticos preparados&lt;/b&gt;&lt;br&gt;Usuarios · Equipos · Partidos&lt;br&gt;Apuestas · Transacciones&lt;br&gt;&lt;font color=&#39;#7F6000&#39;&gt;Ubicación física de archivos: por confirmar&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="470" x="2460" y="2380" as="geometry" />
+        </mxCell>
+        <mxCell id="csv_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#AAB7C4;fontSize=12;fontColor=#334155;align=left;verticalAlign=middle;spacing=10;" value="Los CSV son archivos sintéticos/preparados que representan los mismos dominios de información de NOVATIX. La relación con MySQL se muestra como preparación/intercambio previo; Spark consume los CSV y &lt;b&gt;no consulta MySQL en vivo&lt;/b&gt;." vertex="1">
+          <mxGeometry height="105" width="680" x="460" y="2480" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#AAB7C4;fontSize=12;fontColor=#334155;align=left;verticalAlign=middle;spacing=10;" value="&lt;b&gt;Lectura de conexiones&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#2563EB&#39;&gt;Azul: HTTP / acceso de aplicación&lt;/font&gt; &amp;nbsp; &lt;font color=&#39;#D97706&#39;&gt;Naranja: SQL TCP 3306&lt;/font&gt; &amp;nbsp; &lt;font color=&#39;#7C3AED&#39;&gt;Morado: control Swarm&lt;/font&gt; &amp;nbsp; &lt;font color=&#39;#0F766E&#39;&gt;Verde azulado: flujo CSV / Spark / JSON&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="1030" x="1340" y="2450" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;fontColor=#1F3B63;align=center;verticalAlign=middle;" value="&lt;b&gt;Cliente / navegador&lt;/b&gt;" vertex="1">
+          <mxGeometry height="55" width="280" x="1950" y="-310" as="geometry" />
+        </mxCell>
+        <mxCell id="browser_front" edge="1" parent="1" source="browser" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=2;dashed=0;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="frontend" value="HTTP">
+          <mxGeometry relative="1" x="-0.0925" as="geometry">
+            <Array as="points">
+              <mxPoint x="2090" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u1_users" edge="1" parent="1" source="u1_users" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_users" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.4572" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u2_users" edge="1" parent="1" source="u2_users" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_users" value="SQL · TCP 3306">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2435" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u1_teams" edge="1" parent="1" source="u1_teams" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_teams" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.2325" as="geometry">
+            <Array as="points">
+              <mxPoint x="-75" y="460" />
+              <mxPoint x="2285" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u2_bets" edge="1" parent="1" source="u2_bets" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_bets" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.2534" as="geometry">
+            <mxPoint x="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="1152.5" y="1270" />
+              <mxPoint x="1800" y="1270" />
+              <mxPoint x="1800" y="905" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u1_money" edge="1" parent="1" source="u2_users" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_money" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="-0.0476" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="830" />
+              <mxPoint x="1970" y="830" />
+              <mxPoint x="1970" y="1090" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sql_u2_money" edge="1" parent="1" source="u2_money" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="db_money" value="SQL · TCP 3306">
+          <mxGeometry relative="1" x="0.0106" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="1410" />
+              <mxPoint x="2040" y="1410" />
+              <mxPoint x="2040" y="1120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dash_mysql" edge="1" parent="1" source="dash" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.5;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;entryX=1;entryY=0.7;entryDx=0;entryDy=0;" target="db_users" value="Consultas de lectura a las 5 BD · TCP 3306">
+          <mxGeometry relative="1" x="-0.0639" as="geometry">
+            <Array as="points">
+              <mxPoint x="1580" y="480" />
+              <mxPoint x="2280" y="480" />
+              <mxPoint x="2280" y="-1583.5" />
+              <mxPoint x="645" y="-1583.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="csv_spark" edge="1" parent="1" source="csv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#0F766E;strokeWidth=2;dashed=0;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="master" value="Carga de archivos CSV">
+          <mxGeometry relative="1" x="0.4168" as="geometry">
+            <Array as="points">
+              <mxPoint x="2755" y="1962.3" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db_to_csv_prepared" edge="1" parent="1" source="db_csv_anchor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=2;dashed=1;fontSize=12;fontColor=#663300;labelBackgroundColor=#ffffff;" target="csv" value="Relación lógica de datos / preparación previa&lt;br&gt;&lt;b&gt;No es una consulta MySQL en vivo de Spark&lt;/b&gt;">
+          <mxGeometry relative="1" x="-0.1557" as="geometry">
+            <Array as="points">
+              <mxPoint x="2370" y="2270" />
+              <mxPoint x="300" y="2270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u1_users" edge="1" parent="1" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0.25;exitY=0;entryX=1;entryY=0.5;exitDx=0;exitDy=0;" target="u1_users" value="Balanceo a Ubuntu1">
+          <mxGeometry relative="1" x="-0.0075" as="geometry" />
+        </mxCell>
+        <mxCell id="hap_u1_teams" edge="1" parent="1" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="u1_teams" value="Balanceo a Ubuntu1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="267.5" />
+              <mxPoint x="730" y="524" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u1_bets" edge="1" parent="1" source="haproxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="u1_bets" value="Balanceo a Ubuntu1">
+          <mxGeometry relative="1" x="-0.2494" as="geometry">
+            <Array as="points">
+              <mxPoint x="1372.5" y="210" />
+              <mxPoint x="610" y="210" />
+              <mxPoint x="610" y="850" />
+              <mxPoint x="-375" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="master_w1" edge="1" parent="1" source="master" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#0F766E;strokeWidth=1.8;dashed=0;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="w1" value="Coordinación Spark">
+          <mxGeometry relative="1" x="-0.1584" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="1932.3" />
+              <mxPoint x="650" y="1300" />
+              <mxPoint x="-10" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hap_u1_money" edge="1" parent="1" source="swarm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2563EB;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="u1_money" value="Balanceo a Ubuntu1">
+          <mxGeometry relative="1" x="0.1441" as="geometry">
+            <Array as="points">
+              <mxPoint x="-180" y="30" />
+              <mxPoint x="-180" y="1020.9" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-2" edge="1" parent="1" source="swarm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#7C3AED;strokeWidth=1.5;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u1_money" value="">
+          <mxGeometry relative="1" x="0.0268" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="-3.1" />
+              <mxPoint x="550" y="945.9" />
+              <mxPoint x="-530" y="945.9" />
+            </Array>
+            <mxPoint x="895" y="363" as="sourcePoint" />
+            <mxPoint x="390" y="1310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="o2po6v7nAyWXlfKl177D-6" edge="1" parent="1" source="u1_money" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#D97706;strokeWidth=1.4;dashed=1;fontSize=12;fontColor=#334155;labelBackgroundColor=#ffffff;" target="u2_users" value="">
+          <mxGeometry relative="1" x="0.2473" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="970" />
+            </Array>
+            <mxPoint x="390" y="980" as="sourcePoint" />
+            <mxPoint x="1745" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
