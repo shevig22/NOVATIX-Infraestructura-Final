@@ -13,6 +13,7 @@ Proyecto académico de microservicios para apuestas deportivas **simuladas**, de
 | Reproducir NOVATIX paso a paso (requisito académico) | [**Guía de reproducción actualizada: 3 Ubuntu, Swarm, MySQL, Spark, frontend y pruebas**](documentacion/reproduccion-paso-a-paso.md) |
 | Evaluar qué es reproducible y qué falta | [**Auditoría profunda del repositorio**](documentacion/auditoria-reproducibilidad-2026-11-20.md) |
 | Ver integración reciente (frontend, paginación, Spark) | [Avances del 20/11/2026 — estados y pendientes](documentacion/avances-frontend-spark-paginacion-2026-11-20.md) |
+| Comprobar archivos y CSV descargados | [`python3 pruebas/comprobar-entrega.py`](pruebas/comprobar-entrega.py) — informa también lo que sigue sin versionar |
 | Consultar pruebas | [1 vs 2 réplicas](pruebas/resultados-escalabilidad-2026-11-20.md), [10 vs 20 en JMeter](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md), [restauración final](pruebas/restauracion-final-20-2026-11-20.md) |
 
 ## Componentes desplegados
@@ -39,6 +40,16 @@ Las **20 instancias API** (cuatro por cada una de las API Usuarios, Equipos, Par
 **Ruta analítica:** [cinco CSV preparados](datos/) (500 usuarios, 3.277 equipos, 88.958 partidos, 14.770 apuestas y 22.819 movimientos; **130.324 filas**) → [Spark PySpark V2](spark/analisis_novatix_v2.py) → JSON por lotes → [API y frontend Node.js del dashboard](dashboard/README.md). **El dashboard no consulta MySQL directamente y no está escrito con React o Express.** El reporte se monta en el contenedor desde `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json` como archivo de solo lectura.
 
 Los CSV están en [`datos/`](datos/); el **manifiesto no contiene datos**, solo recuentos, columnas y huellas SHA-256. El dataset deportivo se adaptó desde [Football Data from Transfermarkt en Kaggle](https://www.kaggle.com/datasets/davidcariboo/player-scores); apuestas, usuarios y dinero son **simulados**. [Procedencia y límites](documentacion/procedencia-de-datos.md). No se ha publicado el generador histórico completo ni la transformación exacta desde Kaggle.
+
+### Verificar los archivos de la entrega y los CSV
+
+Desde la raíz del clon:
+
+```bash
+python3 pruebas/comprobar-entrega.py
+```
+
+Esta comprobación **no instala** NOVATIX ni certifica el despliegue de los servicios; verifica archivos publicados, hashes y relaciones de los cinco CSV, e informa las piezas de Ubuntu1 pendientes.
 
 ### Verificar los CSV clonados
 
