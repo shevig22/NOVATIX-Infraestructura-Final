@@ -5,6 +5,7 @@ Uso: python3 pruebas/comprobar-entrega.py
 No instala componentes, no accede a servidores, no usa credenciales ni modifica archivos.
 """
 from pathlib import Path
+import hashlib
 import subprocess
 import sys
 
@@ -24,16 +25,22 @@ OBLIGATORIOS = {
     "Datos": [f"datos/{nombre}.csv" for nombre in
               ("usuarios", "equipos", "partidos", "apuestas", "dinero")]
              + ["datos/manifest-csv-v2.json", "datos/verificar_csv.py"],
+    "Frontend Ubuntu1": [f"frontend/{f}" for f in (
+                           "index.html", "app.js", "estilos.css",
+                           "spark-integracion.js", "spark-dashboard.html",
+                           "spark-dashboard-app.js", "spark-dashboard-styles.css")],
+    "Configuración de ejemplo Apache": ["frontend/apache/novatix-spark-proxy.conf"],
     "Documentación": ["README.md", "documentacion/reproduccion-paso-a-paso.md"],
 }
-# Material de Ubuntu1 que todavía no está respaldado en esta rama de GitHub.
-PENDIENTES_ORIGINALES = {
-    "Frontend transaccional": ["frontend/index.html", "frontend/app.js", "frontend/estilos.css"],
-    "Integración Spark con Apache": ["frontend/spark-integracion.js",
-                                     "frontend/spark-dashboard.html",
-                                     "frontend/spark-dashboard-app.js",
-                                     "frontend/spark-dashboard-styles.css",
-                                     "frontend/apache/novatix-spark-proxy.conf"],
+# Huellas SHA-256 obtenidas del respaldo aportado por Ubuntu1, 20/11/2026.
+SHA_FRONTEND = {
+    "index.html": "15cf89484cc8f735f2b6ed416388172d37a9cdf1b9d7adba6988c8e92b5a6d88",
+    "app.js": "e33f09c3a19b4cec963c0fd4d4c047132966891004495ed8016d5c0e52052c12",
+    "estilos.css": "6867036627a7fad47e89bde1f2a49c300bcb0f89f380ab0761ccf6ebb65af0b5",
+    "spark-integracion.js": "251271c74fe76866829f9494def658406e7d1b1e401522556c63884a22f9da8f",
+    "spark-dashboard.html": "6f891e7282b1afe34db8ed97703a479f32df29782f6515373f5ee210c1921a8f",
+    "spark-dashboard-app.js": "ee018340f4faffae36709904b0258d05d7e36354c87db0d0238372c9e8ae6c8f",
+    "spark-dashboard-styles.css": "a533e9d3fab28054d02f421323a39daba5883cdfbe7bde9096db07dc84c8f618",
 }
 
 def principal():
@@ -56,18 +63,20 @@ def principal():
         csv_ok = False
     print("CSV=", "OK" if csv_ok else "ERROR", sep="")
 
-    print("\n=== MATERIAL REAL DE UBUNTU1 PENDIENTE DE PUBLICACION ===")
-    for grupo, paths in PENDIENTES_ORIGINALES.items():
-        ausentes = [p for p in paths if not (ROOT / p).is_file()]
-        print(grupo + ": " + ("PENDIENTE" if ausentes else "PUBLICADO"))
-        for path in ausentes:
-            print("  NO_VERSIONADO:", path)
+    print("\n=== INTEGRIDAD DE FUENTES ORIGINALES UBUNTU1 ===")
+    frontend_ok = True
+    for nombre, esperado in SHA_FRONTEND.items():
+        ruta = ROOT / "frontend" / nombre
+        actual = hashlib.sha256(ruta.read_bytes()).hexdigest() if ruta.is_file() else ""
+        ok = actual == esperado
+        frontend_ok &= ok
+        print(f"{nombre}: {'OK' if ok else 'ERROR'}")
 
     print("\n=== COMPROBACIONES QUE ESTE SCRIPT NO REALIZA ===")
     print("No verifica despliegue limpio, MySQL poblado, Docker Swarm, Apache,")
     print("autenticacion, navegacion, paginacion de API ni rendimiento JMeter.")
     print("No garantiza que las fuentes versionadas coincidan con servicios activos.")
-    correcto = not faltantes and csv_ok
+    correcto = not faltantes and csv_ok and frontend_ok
     print("RESULTADO_MATERIAL_PUBLICADO=", "CORRECTO" if correcto else "REVISAR", sep="")
     print("REPRODUCCION_INTEGRAL=NO_CERTIFICADA")
     return 0 if correcto else 1
