@@ -124,9 +124,9 @@ En Ubuntu1 se implementó una optimización de emergencia: el botón **«Ver pri
 
 Tras configurar el VirtualHost y los servicios, verificar desde un navegador login, saldo, consulta de partidos, operaciones académicas con datos simulados y errores de consola. **Un HTTP 200 del HTML no certifica funcionalidad de las API.** No ejecutar estos pasos sobre Ubuntu1 original solo para evaluar la guía.
 
-## 7. Paginación de las API Partidos y Equipos (fuente local pendiente de subir)
+## 7. Paginación de las API Partidos y Equipos (fuentes publicadas, despliegue pendiente)
 
-El 20/11/2026 se modificaron **seis archivos** en un clon de Ubuntu2, con commit local `a2dbe75`. En el momento de esta actualización **el push HTTPS continúa rechazado con 403**, por lo que esas modificaciones aún **no** deben suponerse disponibles al clonar `main` desde GitHub.
+El 20/11/2026 se modificaron **seis archivos** en un clon de Ubuntu2 (commit local `a2dbe75`). Se recibió el parche original y se aplicó con validación de los cambios de cada línea. Las fuentes **ya están disponibles al clonar `main`** desde el [commit `593e8213`](https://github.com/shevig22/NOVATIX-Infraestructura-Final/commit/593e8213d0ef85551dd084822211f2928165fc56). **Esto no significa que las imágenes se hayan desplegado en las réplicas activas**.
 
 Los cambios previstos conservan las rutas anteriores sin parámetros y añaden:
 
@@ -137,7 +137,7 @@ Los cambios previstos conservan las rutas anteriores sin parámetros y añaden:
 | `GET /api/equipos?page=1&limit=20&q=nombre` | Equipos que coinciden con el prefijo buscado |
 | `GET /api/partidos` o `GET /api/equipos` | Arreglo anterior, **sin paginación**, por compatibilidad |
 
-**Validación pendiente en un laboratorio nuevo**, una vez publicado el código: confirmar `node --check`, instalar dependencias desde el `package-lock` versionado, construir imágenes locales con etiquetas **nuevas**, consultar MySQL con datos de prueba, verificar primera y última página, parámetros inválidos, compatibilidad sin parámetros y búsqueda por prefijo. No sustituir imágenes del Swarm activo con una versión sin pruebas ni plan de reversión.
+**Validación pendiente en un laboratorio nuevo**, ahora que el código está publicado: confirmar `node --check`, instalar dependencias desde el `package-lock` versionado, construir imágenes locales con etiquetas **nuevas**, consultar MySQL con datos de prueba, verificar primera y última página, parámetros inválidos, compatibilidad sin parámetros y búsqueda por prefijo. No sustituir imágenes del Swarm activo con una versión sin pruebas ni plan de reversión.
 
 Las imágenes `novatix-partidos:paginacion-r7-local` y `novatix-equipos:paginacion-r7-local` fueron construidas únicamente en Ubuntu2 y sus pruebas aisladas usaron datos simulados, **no MySQL real**. Un clon nuevo de GitHub no recibe esas imágenes locales y la plantilla de Swarm conserva las versiones desplegadas históricas.
 
@@ -202,10 +202,10 @@ Realizar la prueba de balanceo de cuatro réplicas por servicio y registrar las 
 | Dashboard Spark independiente | Código y Dockerfile del servicio | **Parcial**: empaquetado disponible, no validado en instalación nueva | contenedor de pruebas, `/api/health`, indicadores visibles |
 | Frontend NOVATIX | **7 fuentes originales y VirtualHost MODELO publicados** | **Parcial**: el modelo de Apache aún no está probado en VM nueva | Apache, login y consulta funcional |
 | Integración Spark en frontend | **Fuentes adaptadas y proxy de ejemplo publicados** | **Parcial**: requiere Apache + servicio Spark y autorización | panel abre dashboard, proxy retorna datos, autorización validada |
-| API paginada nueva | **Commit solo local en Ubuntu2 al 20/11/2026** | **No desde `main` remoto todavía** | fuentes publicadas, MySQL real, pruebas de páginas |
+| API paginada nueva | **6 archivos publicados en `main` (`593e8213`)** | **Parcial**: fuente disponible; no desplegada ni probada contra MySQL real | construcción de imagen, MySQL real, pruebas de páginas |
 | Rendimiento JMeter | Tablas/resúmenes | **No completamente**: faltan planes y resultados crudos | JMX, JTL, mismo escenario, tasa de error documentada |
 
-**Faltantes principales:** validación del VirtualHost modelo y reconstrucción de la aplicación, generación histórica y transformación exacta de Kaggle, carga transaccional de MySQL, automatización de Swarm/Spark/volúmenes, credenciales seguras, VirtualHost transaccional completo y autorización del dashboard, publicación del commit de paginación, pruebas de navegador y repetición de JMeter con JMX/JTL.
+**Faltantes principales:** validación del VirtualHost modelo y reconstrucción de la aplicación, generación histórica y transformación exacta de Kaggle, carga transaccional de MySQL, automatización de Swarm/Spark/volúmenes, credenciales seguras, VirtualHost transaccional completo y autorización del dashboard, despliegue y validación real de paginación, pruebas de navegador y repetición de JMeter con JMX/JTL.
 
 **Conclusión:** esta guía permite seguir la arquitectura por etapas y verificar los componentes que cuentan con materiales. **No certifica una instalación integral desde cero.** Para cumplir un requisito estricto de reproducción total, el equipo debe completar y probar las etapas marcadas «No» antes de afirmar que cualquier tercero puede instalar NOVATIX usando únicamente este repositorio.
 
