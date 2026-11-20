@@ -1,0 +1,208 @@
+# NOVATIX — PLANTILLA DE RECONSTRUCCION; NO DESPLEGAR EN EL CLUSTER ACTIVO.
+# Elaborada desde inventario sanitizado de 17 servicios (20/11/2026).
+# Incluye los 11 servicios de novatix_stack, NO Spark ni dashboard independiente.
+# Requiere completar variables de entorno, validar nodos/volumenes y probar en entorno aislado.
+# NO EJECUTAR: docker stack deploy -c stack.novatix.template.yml novatix_stack
+version: "3.8"
+services:
+  usuarios:
+    image: shevig2208/novatix-usuarios:4@sha256:f97503a6dfad1c62fc2c4fb99792671a6128c45efe496622cfa8f59b14788666
+    environment:
+      DB_HOST: ${USUARIOS_DB_HOST}
+      DB_NAME: ${USUARIOS_DB_NAME}
+      DB_USER: ${USUARIOS_DB_USER}
+      DB_PASSWORD: ${USUARIOS_DB_PASSWORD}
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - "node.labels.novatix.role==aplicaciones"
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any
+  equipos:
+    image: shevig2208/novatix-equipos:3@sha256:7f75ba433b2dbc25c6dadefbe81bd991875888bb11e516bb243951ff7c87d58d
+    environment:
+      DB_HOST: ${EQUIPOS_DB_HOST}
+      DB_NAME: ${EQUIPOS_DB_NAME}
+      DB_USER: ${EQUIPOS_DB_USER}
+      DB_PASSWORD: ${EQUIPOS_DB_PASSWORD}
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - "node.labels.novatix.role==aplicaciones"
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any
+  partidos:
+    image: shevig2208/novatix-partidos:3@sha256:7b50012bc1d48992880a08fb5dbeb29a79534ecb63a41fc9f83d26dd0271934b
+    environment:
+      DB_HOST: ${PARTIDOS_DB_HOST}
+      DB_NAME: ${PARTIDOS_DB_NAME}
+      DB_USER: ${PARTIDOS_DB_USER}
+      DB_PASSWORD: ${PARTIDOS_DB_PASSWORD}
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - "node.labels.novatix.role==aplicaciones"
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any
+  apuestas:
+    image: shevig2208/novatix-apuestas:3@sha256:407cde550ee074d0a90901c7e1c9a824cb667ea0fb985d36d79da0bc4252dd28
+    environment:
+      DB_HOST: ${APUESTAS_DB_HOST}
+      DB_NAME: ${APUESTAS_DB_NAME}
+      DB_USER: ${APUESTAS_DB_USER}
+      DB_PASSWORD: ${APUESTAS_DB_PASSWORD}
+      DINERO_URL: ${APUESTAS_DINERO_URL}
+      PARTIDOS_URL: ${APUESTAS_PARTIDOS_URL}
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - "node.labels.novatix.role==aplicaciones"
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any
+  dinero:
+    image: shevig2208/novatix-dinero:3@sha256:65d58793f4219f4758908014eb962af9ab1d9c3e3696dcf526b4424773bbaaa3
+    environment:
+      DB_HOST: ${DINERO_DB_HOST}
+      DB_NAME: ${DINERO_DB_NAME}
+      DB_USER: ${DINERO_DB_USER}
+      DB_PASSWORD: ${DINERO_DB_PASSWORD}
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - "node.labels.novatix.role==aplicaciones"
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: any
+  db-usuarios:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_DATABASE: ${USUARIOS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${USUARIOS_MYSQL_ROOT_PASSWORD}
+    volumes:
+      - usuarios_data:/var/lib/mysql
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu3"
+  db-equipos:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_DATABASE: ${EQUIPOS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${EQUIPOS_MYSQL_ROOT_PASSWORD}
+    volumes:
+      - equipos_data:/var/lib/mysql
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu3"
+  db-partidos:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_DATABASE: ${PARTIDOS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${PARTIDOS_MYSQL_ROOT_PASSWORD}
+    volumes:
+      - partidos_data:/var/lib/mysql
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu3"
+  db-apuestas:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_DATABASE: ${APUESTAS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${APUESTAS_MYSQL_ROOT_PASSWORD}
+    volumes:
+      - apuestas_data:/var/lib/mysql
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu3"
+  db-dinero:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_DATABASE: ${DINERO_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DINERO_MYSQL_ROOT_PASSWORD}
+    volumes:
+      - dinero_data:/var/lib/mysql
+    networks:
+      - novatix_overlay
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu3"
+  haproxy:
+    image: haproxy:2.8@sha256:9f811a0908e72b71ba5bcc727e3bc186fa46e0cde84c5808953c8a8971588ed7
+    configs:
+      - source: haproxy_v2
+        target: /usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      - novatix_overlay
+    ports:
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+      - target: 8888
+        published: 8888
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == servidorUbuntu2"
+networks:
+  novatix_overlay:
+    external: true
+    name: novatix_stack_novatix_net_new
+configs:
+  haproxy_v2:
+    file: ../haproxy/haproxy.cfg
+volumes:
+  usuarios_data:
+    external: true
+    name: novatix_stack_db_usuarios_data
+  equipos_data:
+    external: true
+    name: novatix_stack_db_equipos_data
+  partidos_data:
+    external: true
+    name: novatix_stack_db_partidos_data
+  apuestas_data:
+    external: true
+    name: novatix_stack_db_apuestas_data
+  dinero_data:
+    external: true
+    name: novatix_stack_db_dinero_data

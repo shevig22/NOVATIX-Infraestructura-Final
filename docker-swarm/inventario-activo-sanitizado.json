@@ -1,0 +1,464 @@
+{
+  "proyecto": "NOVATIX",
+  "tipo": "inventario_sanitizado",
+  "servicios": [
+    {
+      "servicio": "novatix_dashboard",
+      "imagen": "novatix-dashboard:spark-v2-20261119_234042",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname==servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [
+        {
+          "interno": 8080,
+          "publicado": 8090,
+          "modo": "host"
+        }
+      ],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_resultados",
+          "destino": "/resultados",
+          "solo_lectura": true
+        }
+      ],
+      "variables_nombres": [
+        "APUESTAS_DB_HOST",
+        "APUESTAS_DB_NAME",
+        "APUESTAS_DB_PASSWORD",
+        "APUESTAS_DB_USER",
+        "DINERO_DB_HOST",
+        "DINERO_DB_NAME",
+        "DINERO_DB_PASSWORD",
+        "DINERO_DB_USER",
+        "EQUIPOS_DB_HOST",
+        "EQUIPOS_DB_NAME",
+        "EQUIPOS_DB_PASSWORD",
+        "EQUIPOS_DB_USER",
+        "PARTIDOS_DB_HOST",
+        "PARTIDOS_DB_NAME",
+        "PARTIDOS_DB_PASSWORD",
+        "PARTIDOS_DB_USER",
+        "PORT",
+        "USUARIOS_DB_HOST",
+        "USUARIOS_DB_NAME",
+        "USUARIOS_DB_PASSWORD",
+        "USUARIOS_DB_USER"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_spark_master",
+      "imagen": "spark:3.5.9-python3@sha256:340a497fe4fe01556bb5d459ab658ae7e13b6d7fe6c172061e624004a1620ba8",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [
+        {
+          "interno": 8080,
+          "publicado": 8092,
+          "modo": "host"
+        }
+      ],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_datos",
+          "destino": "/datos",
+          "solo_lectura": true
+        }
+      ],
+      "variables_nombres": [
+        "SPARK_DAEMON_MEMORY"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_spark_reporte",
+      "imagen": "spark:3.5.9-python3@sha256:340a497fe4fe01556bb5d459ab658ae7e13b6d7fe6c172061e624004a1620ba8",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_datos",
+          "destino": "/datos",
+          "solo_lectura": true
+        },
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_resultados",
+          "destino": "/resultados",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_spark_v2_20261119232302",
+      "imagen": "spark:3.5.9-python3@sha256:340a497fe4fe01556bb5d459ab658ae7e13b6d7fe6c172061e624004a1620ba8",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname==servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_datos",
+          "destino": "/datos",
+          "solo_lectura": true
+        },
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_resultados",
+          "destino": "/resultados",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_spark_worker1",
+      "imagen": "spark:3.5.9-python3@sha256:340a497fe4fe01556bb5d459ab658ae7e13b6d7fe6c172061e624004a1620ba8",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu1"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_datos",
+          "destino": "/datos",
+          "solo_lectura": true
+        }
+      ],
+      "variables_nombres": [
+        "SPARK_DAEMON_MEMORY",
+        "SPARK_WORKER_NAME"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_spark_worker2",
+      "imagen": "spark:3.5.9-python3@sha256:340a497fe4fe01556bb5d459ab658ae7e13b6d7fe6c172061e624004a1620ba8",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "bind",
+          "origen": "/vagrant/novatix_spark_datos",
+          "destino": "/datos",
+          "solo_lectura": true
+        }
+      ],
+      "variables_nombres": [
+        "SPARK_DAEMON_MEMORY",
+        "SPARK_WORKER_NAME"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_apuestas",
+      "imagen": "shevig2208/novatix-apuestas:3@sha256:407cde550ee074d0a90901c7e1c9a824cb667ea0fb985d36d79da0bc4252dd28",
+      "replicas": 2,
+      "max_replicas_por_nodo": 1,
+      "restricciones": [
+        "node.labels.novatix.role==aplicaciones"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [],
+      "variables_nombres": [
+        "DB_HOST",
+        "DB_NAME",
+        "DB_PASSWORD",
+        "DB_USER",
+        "DINERO_URL",
+        "PARTIDOS_URL"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_db-apuestas",
+      "imagen": "mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu3"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "volume",
+          "origen": "novatix_stack_db_apuestas_data",
+          "destino": "/var/lib/mysql",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [
+        "MYSQL_DATABASE",
+        "MYSQL_ROOT_PASSWORD"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_db-dinero",
+      "imagen": "mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu3"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "volume",
+          "origen": "novatix_stack_db_dinero_data",
+          "destino": "/var/lib/mysql",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [
+        "MYSQL_DATABASE",
+        "MYSQL_ROOT_PASSWORD"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_db-equipos",
+      "imagen": "mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu3"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "volume",
+          "origen": "novatix_stack_db_equipos_data",
+          "destino": "/var/lib/mysql",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [
+        "MYSQL_DATABASE",
+        "MYSQL_ROOT_PASSWORD"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_db-partidos",
+      "imagen": "mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu3"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "volume",
+          "origen": "novatix_stack_db_partidos_data",
+          "destino": "/var/lib/mysql",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [
+        "MYSQL_DATABASE",
+        "MYSQL_ROOT_PASSWORD"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_db-usuarios",
+      "imagen": "mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu3"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [
+        {
+          "tipo": "volume",
+          "origen": "novatix_stack_db_usuarios_data",
+          "destino": "/var/lib/mysql",
+          "solo_lectura": null
+        }
+      ],
+      "variables_nombres": [
+        "MYSQL_DATABASE",
+        "MYSQL_ROOT_PASSWORD"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_dinero",
+      "imagen": "shevig2208/novatix-dinero:3@sha256:65d58793f4219f4758908014eb962af9ab1d9c3e3696dcf526b4424773bbaaa3",
+      "replicas": 2,
+      "max_replicas_por_nodo": 1,
+      "restricciones": [
+        "node.labels.novatix.role==aplicaciones"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [],
+      "variables_nombres": [
+        "DB_HOST",
+        "DB_NAME",
+        "DB_PASSWORD",
+        "DB_USER"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_equipos",
+      "imagen": "shevig2208/novatix-equipos:3@sha256:7f75ba433b2dbc25c6dadefbe81bd991875888bb11e516bb243951ff7c87d58d",
+      "replicas": 2,
+      "max_replicas_por_nodo": 1,
+      "restricciones": [
+        "node.labels.novatix.role==aplicaciones"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [],
+      "variables_nombres": [
+        "DB_HOST",
+        "DB_NAME",
+        "DB_PASSWORD",
+        "DB_USER"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_haproxy",
+      "imagen": "haproxy:2.8@sha256:9f811a0908e72b71ba5bcc727e3bc186fa46e0cde84c5808953c8a8971588ed7",
+      "replicas": 1,
+      "max_replicas_por_nodo": null,
+      "restricciones": [
+        "node.hostname == servidorUbuntu2"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [
+        {
+          "interno": 80,
+          "publicado": 8080,
+          "modo": "host"
+        },
+        {
+          "interno": 8888,
+          "publicado": 8888,
+          "modo": "host"
+        }
+      ],
+      "montajes": [],
+      "variables_nombres": [],
+      "configs": [
+        "novatix_stack_haproxy_cfg_v2_20261119193336"
+      ]
+    },
+    {
+      "servicio": "novatix_stack_partidos",
+      "imagen": "shevig2208/novatix-partidos:3@sha256:7b50012bc1d48992880a08fb5dbeb29a79534ecb63a41fc9f83d26dd0271934b",
+      "replicas": 2,
+      "max_replicas_por_nodo": 1,
+      "restricciones": [
+        "node.labels.novatix.role==aplicaciones"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [],
+      "variables_nombres": [
+        "DB_HOST",
+        "DB_NAME",
+        "DB_PASSWORD",
+        "DB_USER"
+      ],
+      "configs": []
+    },
+    {
+      "servicio": "novatix_stack_usuarios",
+      "imagen": "shevig2208/novatix-usuarios:4@sha256:f97503a6dfad1c62fc2c4fb99792671a6128c45efe496622cfa8f59b14788666",
+      "replicas": 2,
+      "max_replicas_por_nodo": 1,
+      "restricciones": [
+        "node.labels.novatix.role==aplicaciones"
+      ],
+      "redes": [
+        "klq9z33usype07g3s0tmj6ala"
+      ],
+      "puertos": [],
+      "montajes": [],
+      "variables_nombres": [
+        "DB_HOST",
+        "DB_NAME",
+        "DB_PASSWORD",
+        "DB_USER"
+      ],
+      "configs": []
+    }
+  ]
+}
