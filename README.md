@@ -2,7 +2,7 @@
 
 Proyecto académico de **Redes e Infraestructura**: plataforma de microservicios y analítica distribuida implementada con **Docker Swarm, Node.js, MySQL, HAProxy y Apache Spark 3.5.9**.
 
-> **Estado del repositorio (19/11/2026):** inicio de la consolidación del despliegue final. Este README documenta el entorno que se verificó en las máquinas virtuales. **Spark V2, su runner y los diagramas ya están publicados; todavía faltan cargar las fuentes completas del dashboard y los scripts exactos del entorno**; no debe considerarse reproducible desde un único comando hasta completar esa consolidación.
+> **Estado de consolidación (20/11/2026):** publicados el código de las cinco APIs recuperadas de las imágenes Docker Hub `shevig2208`, el código del dashboard Spark V2, PySpark V2, el `haproxy.cfg` activo y los diagramas. **Aún faltan** los manifiestos de despliegue exactos, el `Vagrantfile` efectivo, la creación/importación de MySQL y pruebas de desempeño para reproducir todo el sistema desde cero.
 
 ## Arquitectura desplegada
 
@@ -26,7 +26,7 @@ Proyecto académico de **Redes e Infraestructura**: plataforma de microservicios
 | Spark Master Web UI | `http://192.168.100.3:8092` |
 | Estadísticas HAProxy | `http://192.168.100.3:8888` |
 
-El puerto 8093 se utilizó como entorno de pruebas y **no forma parte del diseño final**. Su retiro debe comprobarse en el entorno antes de afirmarlo como realizado.
+El puerto 8093 se utilizó para pruebas y **no forma parte del diseño final**. En la auditoría del 19/11 se verificó que solamente continúa `novatix_dashboard` en el puerto 8090.
 
 ## Flujos de datos
 
@@ -52,9 +52,11 @@ Estas verificaciones **no sustituyen** una prueba de carga, latencia o recuperac
 - `documentacion/`: arquitectura, estado de pruebas y registro de consolidación.
 - `diagramas/`: diagramas editables de despliegue y pipeline publicados.
 - `spark/`: código PySpark V2, runner y documentación publicados.
-- `dashboard/`: incorporar frontend, backend y Dockerfile realmente desplegados.
+- `dashboard/`: servidor Node.js, interfaz web, Dockerfile e instrucciones de la versión Spark V2 publicada.
 - `infraestructura/`: incorporar Vagrant y provisión para los tres nodos.
-- `docker-swarm/`, `haproxy/`, `mysql/`, `microservicios/`: incorporar archivos fuente y de despliegue reales.
+- `haproxy/`: configuración completa del balanceador activo.
+- `microservicios/`: código original de las cinco APIs extraído de las imágenes `shevig2208`, con sus Dockerfiles y lockfiles.
+- `docker-swarm/` y `mysql/`: pendientes de incorporar los manifiestos exactos y esquemas de datos.
 - `diagramas/`, `pruebas/`: diagramas y evidencias.
 
 **Atención:** la configuración del repositorio original [Sant1833/Novatix](https://github.com/Sant1833/Novatix) corresponde a otra topología y **no debe desplegarse sin adaptación** sobre estas máquinas.

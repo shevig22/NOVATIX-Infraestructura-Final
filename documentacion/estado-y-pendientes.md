@@ -9,11 +9,11 @@
 | Spark Master y Workers | 1 Master + 2 Workers activos | Verificado |
 | Spark V2 | Job `Complete`, 11/11 análisis, 2 ejecutores observados | Verificado |
 | Dashboard V2 8090 | Servicio 1/1; rutas verificadas | Verificado |
-| Retiro de dashboard duplicado 8093 | Comando de consolidación proporcionado, salida final no aportada | Pendiente de comprobar |
+| Retiro de dashboard duplicado 8093 | La auditoría final muestra únicamente `novatix_dashboard` | Verificado |
 | Carga, latencia, escalabilidad y estrés | No hay mediciones comparativas reproducibles registradas aquí | Pendiente |
 | Reinicio y persistencia de red | No se realizó prueba final tras reinicio | Pendiente |
 | Informe IEEE y presentación | Entregables requeridos por profesor | Pendiente |
-| Reproducibilidad desde GitHub | Faltan importar fuentes y configuración efectiva | En preparación |
+| Reproducibilidad desde GitHub | Ya hay fuentes de 5 APIs, Spark V2, dashboard, HAProxy y diagramas; faltan stack, Vagrant y MySQL | En preparación |
 
 ## Spark V2 — resultados observados
 
@@ -31,9 +31,8 @@ No fabricar métricas de desempeño que todavía no se hayan medido. Explicar qu
 
 ## Siguiente importación a GitHub
 
-1. Exportar Vagrantfile efectivo y scripts de provisión de los tres nodos.
-2. Subir la versión exacta de Spark V2, el runner del job y el frontend/backend del dashboard V2.
-3. Subir el `haproxy.cfg` activo de la Docker Config V2 y los stacks/servicios Swarm reales, sin valores de secretos.
-4. Agregar fuentes de las APIs e instalación de MySQL desde los artefactos originales verificados.
-5. Incorporar diagramas `.drawio` corregidos y evidencias reproducibles de pruebas.
-6. Publicar informe IEEE, diapositivas y guía de ejecución final.
+1. Exportar el `Vagrantfile` efectivo y los scripts de provisión de los tres nodos.
+2. Exportar **sin credenciales** la configuración efectiva de los servicios y redes Docker Swarm.
+3. Incorporar esquemas e importación MySQL sin datos sensibles.
+4. Añadir evidencias reproducibles de carga, latencia y escalabilidad.
+5. Finalizar informe IEEE, presentación y guía paso a paso.
