@@ -1,37 +1,53 @@
-# Dashboard NOVATIX Spark Analytics V2
+# Dashboard NOVATIX Spark Analytics V2 — imagen portable
 
-El servicio desplegado como `novatix_dashboard` en Ubuntu2 escucha desde el host en el puerto **8090** (puerto interno 8080). La versión actual lee `/resultados/reporte_novatix_v2.json`, el resultado de Spark V2.
+**Estado del laboratorio:** el dashboard ya funciona como **servicio Docker Swarm `novatix_dashboard`** fijado a **servidorUbuntu2**, puerto `8090` externo → `8080` en el contenedor. El inventario anterior utiliza una **imagen local** `novatix-dashboard:spark-v2-20261119_234042`. El dashboard es un servidor Node.js (módulo HTTP nativo) que distribuye frontend HTML/CSS/JS y consulta el reporte JSON; **no accede a MySQL**.
 
-## Fuente del código
+## Empaquetado nuevo desde GitHub
 
-Los archivos **ya están publicados** en este directorio: `server-v2.js`, `public/index.html`, `public/styles.css`, `public/app.js` y `Dockerfile`. Proceden del paquete de despliegue original `novatix_dashboards_spark_v2.tar.gz` instalado en Ubuntu2. No confundir con el dashboard del GitHub anterior: aquel consumía `reportes_db` mientras esta versión consume un JSON generado por Spark.
+El `Dockerfile` y el `Dockerfile.portable` ahora usan `node:22-alpine` directamente, **sin la dependencia anterior de `novatix-dashboard:1.2.0`**. Copian `server-v2.js` y la carpeta `public/`; exponen `8080`, ejecutan como usuario no privilegiado `node` y comprueban `/api/health` mediante `HEALTHCHECK`.
 
-Archivos requeridos de ese paquete:
-
-- `server-v2.js` — servidor Node.js de solo lectura.
-- `public/index.html`, `public/styles.css`, `public/app.js` — interfaz del dashboard.
-- `Dockerfile` — receta portable basada en `node:22-alpine` para construir desde el código publicado.
-- `desplegar.sh` — instalador histórico que reemplazaba los puertos 8090 y 8093; **no ejecutarlo en el diseño final de dashboard único**, requiere revisión previa.
-
-## Construcción portable propuesta
-
-El `Dockerfile` utiliza Node 22 y módulos estándar sin depender de la imagen local antigua. **Este Dockerfile portable no ha sido validado en el clúster**; construir y probar antes de utilizarlo como reemplazo de la versión que funciona. `Dockerfile.portable` se conserva como alternativa equivalente. Se conserva la receta original en la instalación local para comparar.
-
-```sh
-docker build -t novatix-dashboard:spark-v2-portable .
+```text
+dashboard/
+├── Dockerfile
+├── server-v2.js
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+└── probar-contenedor-aislado.sh
 ```
 
-El contenedor requiere acceso de solo lectura al JSON mediante un bind mount en `/resultados/reporte_novatix_v2.json`.
+No requiere instalación de paquetes npm externos. **El código del contenedor está preparado, pero esta nueva imagen no ha sido construida ni desplegada en las VMs aún.** El servicio `novatix_dashboard` original permanece sin cambios.
 
-## Pruebas de referencia
+## ¿Dónde está el JSON de Spark?
 
-```sh
+- En Ubuntu2 (host Vagrant): `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json`.
+- Dentro del contenedor: `/resultados/reporte_novatix_v2.json`.
+- Montaje real: `/vagrant/novatix_spark_resultados:/resultados:ro`, **solo lectura**.
+- Datos de entrada a Spark: `/vagrant/novatix_spark_datos/*.csv`.
+
+Spark realiza un trabajo **por lotes** y guarda el JSON; el dashboard lo lee y lo entrega al frontend cuando el navegador hace consultas. El dashboard no genera ni escribe ese archivo.
+
+## Validar la imagen portable sin tocar la instalación actual
+
+En **Ubuntu2**, desde un clon actualizado del repositorio nuevo:
+
+```bash
+bash dashboard/probar-contenedor-aislado.sh
+```
+
+El script crea solo una imagen local y levanta temporalmente un contenedor **distinto** en `127.0.0.1:18090`, con el reporte JSON en un montaje de solo lectura. Prueba los endpoints `/api/health`, `/`, `/app.js` y `/api/spark/v2`. Luego elimina únicamente el contenedor temporal de nombre exacto. **No ejecuta `docker service update` ni `docker stack deploy`**. Verificar la disponibilidad y permisos de `/vagrant/novatix_spark_resultados` antes de ejecutarlo.
+
+No sustituir el dashboard 8090 ni la imagen actual hasta que esta comprobación resulte satisfactoria. Una eventual sustitución del servicio requerirá validación y plan de reversión separado.
+
+## Corrección visual de «Empate»
+
+En `public/app.js`, la categoría `eq_id=0` se muestra como **Empate**. El endpoint de compatibilidad `/api/dashboard` tiene la misma etiqueta. Estos cambios están versionados, pero **aún no se han desplegado en el contenedor actualmente activo**.
+
+## Auditoría de la instalación actual (sin modificarla)
+
+```bash
+sudo -n docker service ls --filter name=novatix_dashboard --format '{{.Name}} {{.Replicas}}'
+sudo -n docker service inspect novatix_dashboard --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'
 curl -fsS http://192.168.100.3:8090/api/health
-curl -fsS http://192.168.100.3:8090/api/spark/v2
 ```
-
-No hay dependencia JDBC, ni SQL en vivo: los datos proceden de cinco CSV sintéticos procesados por Spark.
-
-## Corrección semántica 20/11/2026
-
-En las apuestas simuladas, `equipo_id=0` identifica **Empate**, no un equipo. La interfaz `public/app.js` transforma solamente la etiqueta mostrada del top y la tabla; el endpoint de compatibilidad `/api/dashboard` aplica la misma regla. El JSON de Spark original no se modifica. **Cambio publicado en código, no desplegado en el clúster**. La copia instalada del dashboard puede necesitar rebuild/redeploy controlado y verificación posterior, sin tocar Spark ni las cinco MySQL.

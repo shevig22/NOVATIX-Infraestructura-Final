@@ -32,7 +32,7 @@ El puerto 8093 se utilizó para pruebas y **no forma parte del diseño final**. 
 
 **Operación transaccional:** cliente → HAProxy → API de microservicio → MySQL del servicio en Ubuntu3 → respuesta.
 
-**Analítica Spark V2:** cinco archivos CSV preparados a partir de una fuente futbolística abierta y ampliaciones simuladas → Spark Master y dos Workers → reporte JSON → API Express del dashboard → gráficos y tablas. El análisis Spark es **por lotes**; el navegador no consulta las bases MySQL directamente. Tampoco se afirma que el reporte Spark sea una consulta SQL en tiempo real.
+**Analítica Spark V2:** cinco archivos CSV preparados a partir de una fuente futbolística abierta y ampliaciones simuladas → Spark Master y dos Workers → reporte JSON → API Node.js del dashboard (módulo HTTP nativo) → gráficos y tablas. El análisis Spark es **por lotes**; el navegador no consulta las bases MySQL directamente. Tampoco se afirma que el reporte Spark sea una consulta SQL en tiempo real.
 
 El Dashboard Spark V2 incluye once conjuntos de análisis y muestra tendencias mensuales, ligas, equipos, apuestas, movimientos y distribuciones. El reporte está en `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json` en el entorno Vagrant.
 
@@ -100,3 +100,7 @@ Las pruebas históricas de rendimiento [1 vs 2 réplicas](pruebas/resultados-esc
 **Dashboard:** corregimos en el código fuente la presentación de `equipo_id=0` como **Empate**, tanto en «Ligas y equipos» como en el endpoint de compatibilidad. **El cambio está versionado, pero no fue desplegado sobre el dashboard en ejecución**.
 
 **Pruebas en orden de confianza:** [escalabilidad de Equipos 1→2 réplicas (720/720 GET HTTP 200)](pruebas/resultados-escalabilidad-2026-11-20.md); [balanceo 4/4 por API](pruebas/validacion-arquitectura-20-instancias.md); [estrés exploratorio JMeter 10 vs 20](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md). La corrida con JMeter alcanzó ~21 % de errores, por lo que el +36,4 % observado de RPS **no** es una medición de capacidad sostenible.
+
+## Dashboard empaquetado como contenedor portable
+
+El dashboard ya opera como `novatix_dashboard` (Docker Swarm), en Ubuntu2, puerto **8090 externo → 8080 interno**. Spark genera el JSON en `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json`; el contenedor lo ve como `/resultados/reporte_novatix_v2.json` gracias a un bind `:ro`. Ahora existe un `dashboard/Dockerfile` portable basado en `node:22-alpine` y una [prueba de empaquetado aislada](dashboard/README.md). **La versión activa no fue reemplazada**.

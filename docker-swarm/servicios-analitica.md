@@ -18,3 +18,7 @@ El archivo histórico del dashboard declara variables de MySQL por nombre, aunqu
 Para reconstruir por completo hacen falta `Command`, `Args`, `WorkingDir`, usuario, Config/Secrets y recursos de cada tarea, así como comprobar las rutas compartidas entre nodos. No incluir directamente en el stack los trabajos batch que ya han finalizado.
 
 **Fuente:** `docker-swarm/inventario-activo-sanitizado.json`; evidencia adicional en `documentacion/arquitectura-implementada.md`.
+
+## Empaquetado portable del dashboard — 20/11/2026
+
+El dashboard **ya es un servicio de Docker Swarm** en Ubuntu2. El directorio `dashboard/` incorpora un `Dockerfile` portable desde `node:22-alpine` y el ensayo aislado `probar-contenedor-aislado.sh` para validar en `127.0.0.1:18090`. **No se cambió el servicio actual del puerto 8090.** El JSON Spark queda accesible por el bind `/vagrant/novatix_spark_resultados:/resultados:ro`. [Guía de construcción](../dashboard/README.md).

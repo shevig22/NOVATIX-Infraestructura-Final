@@ -1,0 +1,15 @@
+.git
+*.md
+*.log
+*.tar
+*.tar.gz
+*.zip
+*.jtl
+*.csv
+*.json
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+probar-contenedor-aislado.sh
+Dockerfile.portable
