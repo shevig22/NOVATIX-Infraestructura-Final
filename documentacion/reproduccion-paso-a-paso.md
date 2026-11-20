@@ -44,9 +44,11 @@ sudo docker node ls
 sudo docker node update --label-add novatix.role=aplicaciones servidorUbuntu1
 sudo docker node update --label-add novatix.role=aplicaciones servidorUbuntu2
 sudo docker node update --label-add novatix.role=datos servidorUbuntu3
-sudo docker network create --driver overlay --attachable --subnet 10.77.0.0/24 novatix_stack_novatix_net_new
+sudo docker network create --driver overlay --subnet 10.77.0.0/24 novatix_stack_novatix_net_new
 sudo docker network inspect novatix_stack_novatix_net_new
 ```
+
+**Nota:** la red original fue verificada como **no attachable**. Por eso el comando anterior no agrega `--attachable`; las pruebas con contenedores independientes deben usar otra red y no presuponer que pueden unirse directamente a la overlay original. En un despliegue nuevo, revisar el ciclo de vida de la red externa antes de usar la plantilla.
 
 Las cinco API tienen ubicación restringida a aplicaciones; las cinco bases se fijan a Ubuntu3. La red Swarm overlay requiere conectividad entre nodos, incluidos los puertos de control/overlay según la documentación oficial de Docker.
 
@@ -150,6 +152,17 @@ curl -sS -o /dev/null -w 'API=%{http_code}\n' http://127.0.0.1/novatix-spark-api
 **Seguridad no terminada:** ocultar una tarjeta en el frontend consultando `usuarioActual.rol` o `localStorage` **no protege la URL ni la API**. No se debe presentar el dashboard como privado por rol hasta implementar validación de sesión y autorización en el servidor, restringir el acceso directo a Ubuntu2:8090 y revisar el proceso de registro de administradores. No exponer esta versión académica a Internet.
 
 ## 9. Validación y limitaciones
+
+### Verificar los materiales descargados con un solo comando
+
+Desde la raíz del repositorio clonado:
+
+```bash
+python3 pruebas/comprobar-entrega.py
+```
+
+El script solo lee archivos: comprueba la presencia de las fuentes/versiones publicadas y ejecuta la verificación de integridad y relaciones de los cinco CSV. También identifica el frontend de Ubuntu1 que aún no se ha versionado. **No sustituye** una instalación con Vagrant, Swarm, Spark y Apache ni certifica que estén funcionando.
+
 
 Realizar la prueba de balanceo de cuatro réplicas por servicio y registrar las respuestas `X-Replica`/stats HAProxy. Los ensayos históricos están en [`pruebas/`](../pruebas/). El ensayo limpio 1→2 réplicas logró **720/720 HTTP 200** y el estrés JMeter exploratorio de 10 vs 20 acumuló ~21 % de errores. No atribuir esos fallos al servidor sin sus códigos y JTL.
 
