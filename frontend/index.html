@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novatix Casino</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <!-- LOGIN -->
+    <section id="loginSection" class="pantalla">
+        <div class="card">
+            <h1>⚽ NOVATIX</h1>
+            <h2>Iniciar sesión</h2>
+            <p class="subtitulo">Ingresa a tu cuenta para comenzar</p>
+            <form id="loginForm">
+                <input type="text" id="loginUsuario" placeholder="Usuario" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="btn-principal">Iniciar sesión</button>
+            </form>
+            <p id="loginError" class="mensaje-error"></p>
+            <p class="cambiar-formulario">
+                ¿No tienes una cuenta?
+                <button type="button" onclick="mostrarRegistro()" class="btn-link">Regístrate</button>
+            </p>
+        </div>
+    </section>
+
+    <!-- REGISTRO -->
+    <section id="registroSection" class="pantalla oculto">
+        <div class="card">
+            <h1>⚽ NOVATIX</h1>
+            <h2>Crear cuenta</h2>
+            <p class="subtitulo">Regístrate para comenzar a apostar</p>
+            <form id="registroForm">
+                <input type="text" id="registroNombre" placeholder="Nombre completo" required>
+                <input type="email" id="registroEmail" placeholder="Correo electrónico" required>
+                <input type="text" id="registroUsuario" placeholder="Nombre de usuario" required>
+                <input type="password" id="registroPassword" placeholder="Contraseña" required>
+                <button type="submit" class="btn-principal">Crear cuenta</button>
+            </form>
+            <p id="registroError" class="mensaje-error"></p>
+            <p id="registroExito" class="mensaje-exito"></p>
+            <p class="cambiar-formulario">
+                ¿Ya tienes una cuenta?
+                <button type="button" onclick="mostrarLogin()" class="btn-link">Iniciar sesión</button>
+            </p>
+        </div>
+    </section>
+
+    <!-- APLICACIÓN PRINCIPAL -->
+    <div id="appSection" class="oculto">
+        <nav class="navbar">
+            <div class="logo">⚽ NOVATIX</div>
+            <div class="usuario-navbar">
+                <span id="nombreUsuarioNav"></span>
+                <button onclick="cerrarSesion()" class="btn-salir">Cerrar sesión</button>
+            </div>
+        </nav>
+
+        <main class="contenedor">
+            <section class="bienvenida">
+                <h1>Bienvenido, <span id="nombreUsuario"></span> 👋</h1>
+                <p>Selecciona un partido y realiza tu apuesta.</p>
+            </section>
+
+            <section class="saldo-box">
+                <div>
+                    <p class="titulo-saldo">💰 Saldo disponible</p>
+                    <p id="saldo">$0</p>
+                </div>
+                <button onclick="mostrarRecarga()" class="btn-recargar">+ Recargar saldo</button>
+            </section>
+
+            <div id="modalRecarga" class="modal">
+                <div class="modal-contenido">
+                    <h2>💰 Recargar saldo</h2>
+                    <p>Ingresa el monto que deseas recargar.</p>
+                    <input type="number" id="montoRecarga" placeholder="Ej: 50000" min="1000">
+                    <div class="modal-botones">
+                        <button onclick="cerrarRecarga()" class="btn-cancelar">Cancelar</button>
+                        <button onclick="recargarSaldo()" class="btn-confirmar">Recargar</button>
+                    </div>
+                    <p id="recargaMensaje"></p>
+                </div>
+            </div>
+
+            <section class="seccion">
+                <div class="titulo-seccion">
+                    <h2>⚽ Partidos disponibles</h2>
+                    <button onclick="cargarPartidos()" class="btn-secundario">Actualizar</button>
+                </div>
+                <div id="partidosContainer" class="partidos-grid">
+                    <p>Cargando partidos...</p>
+                </div>
+            </section>
+
+            <section id="apuestaSection" class="seccion apuesta-panel oculto">
+                <h2>🎯 Realizar apuesta</h2>
+                <div id="partidoSeleccionado"></div>
+                <label>Equipo seleccionado</label>
+                <input type="text" id="equipoApuesta" readonly>
+                <label>Cuota</label>
+                <input type="text" id="cuotaApuesta" readonly>
+                <label>Dinero a apostar</label>
+                <input type="number" id="montoApuesta" placeholder="Ej: 10000" min="1000">
+                <button onclick="realizarApuesta()" class="btn-principal">Confirmar apuesta</button>
+                <button onclick="cancelarApuesta()" class="btn-cancelar">Cancelar</button>
+                <p id="apuestaMensaje"></p>
+            </section>
+
+            <section class="seccion">
+                <div class="titulo-seccion">
+                    <h2>📋 Mis apuestas</h2>
+                    <button onclick="cargarMisApuestas()" class="btn-secundario">Actualizar</button>
+                </div>
+                <div id="misApuestas">
+                    <p>Cargando apuestas...</p>
+                </div>
+            </section>
+
+            <section id="adminSection" class="seccion admin-panel oculto">
+                <h2>⚙️ Panel de administrador</h2>
+
+                <div class="admin-card">
+                    <h3>⚽ Crear equipo</h3>
+                    <form id="equipoForm">
+                        <input type="text" id="equipoNombre" placeholder="Nombre del equipo" required>
+                        <input type="text" id="equipoPais" placeholder="País" required>
+                        <input type="text" id="equipoLiga" placeholder="Liga" required>
+                        <input type="text" id="equipoEscudo" placeholder="Nombre del escudo, ejemplo: real_madrid.png">
+                        <button type="submit" class="btn-principal">Crear equipo</button>
+                    </form>
+                    <p id="teamError"></p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>🏟️ Crear partido</h3>
+                    <form id="partidoForm">
+                        <select id="partidoLocal" required>
+                            <option value="">Seleccionar equipo local</option>
+                        </select>
+                        <select id="partidoVisitante" required>
+                            <option value="">Seleccionar equipo visitante</option>
+                        </select>
+                        <label>Fecha y hora</label>
+                        <input type="datetime-local" id="partidoFecha" required>
+                        <input type="number" id="cuotaLocal" placeholder="Cuota local" step="0.01" min="1" required>
+                        <input type="number" id="cuotaEmpate" placeholder="Cuota empate" step="0.01" min="1" required>
+                        <input type="number" id="cuotaVisitante" placeholder="Cuota visitante" step="0.01" min="1" required>
+                        <button type="submit" class="btn-principal">Crear partido</button>
+                    </form>
+                    <p id="matchError"></p>
+                </div>
+
+                <div class="admin-card">
+                    <div class="titulo-seccion">
+                        <h3>📋 Equipos</h3>
+                        <button onclick="cargarEquiposAdmin()" class="btn-secundario">Actualizar</button>
+                    </div>
+                    <div id="equiposAdmin"></div>
+                </div>
+
+                <div class="admin-card" id="sparkNovatix">
+                    <h3>📊 Analítica Spark</h3>
+                    <p>Consulta los reportes del procesamiento distribuido de NOVATIX.</p>
+                    <button type="button" class="btn-principal"
+                        onclick="abrirSparkNovatix()">
+                        Abrir dashboard Spark
+                    </button>
+                    <div id="sparkMarco" class="oculto" style="margin-top:18px">
+                        <iframe id="sparkIframe"
+                            title="Dashboard Analítica Spark"
+                            style="width:100%;height:780px;border:1px solid #ddd;border-radius:12px;background:white"
+                            loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+<script src="spark-integracion.js"></script>
+</body>
+</html>
