@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  if Vagrant.has_plugin? "vagrant-vbguest"
+    config.vbguest.no_install = true
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote = true
+  end
+
+  # WORKER
+  config.vm.define :servidorUbuntu1 do |servidorUbuntu1|
+    servidorUbuntu1.vm.box = "bento/ubuntu-22.04"
+    servidorUbuntu1.vm.network :private_network, ip: "192.168.100.2"
+    servidorUbuntu1.vm.hostname = "servidorUbuntu1"
+    servidorUbuntu1.vm.box_download_insecure = true
+    servidorUbuntu1.vm.network :forwarded_port, guest: 22, host: 2201, id: "ssh"
+
+    servidorUbuntu1.vm.provision "shell", run: "always", inline: "ip route replace 192.168.100.3/32 dev eth1 src 192.168.100.2 metric 10"
+
+    servidorUbuntu1.vm.provider "virtualbox" do |v|
+      v.cpus = 2
+      v.memory = 4096
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  # MASTER
+  config.vm.define :servidorUbuntu2 do |servidorUbuntu2|
+    servidorUbuntu2.vm.box = "bento/ubuntu-22.04"
+    servidorUbuntu2.vm.network :private_network, ip: "192.168.100.3"
+    servidorUbuntu2.vm.hostname = "servidorUbuntu2"
+    servidorUbuntu2.vm.box_download_insecure = true
+    servidorUbuntu2.vm.network :forwarded_port, guest: 22, host: 2202, id: "ssh"
+
+    servidorUbuntu2.vm.provision "shell", run: "always", inline: "ip route replace 192.168.100.2/32 dev eth1 src 192.168.100.3 metric 10"
+
+    servidorUbuntu2.vm.provider "virtualbox" do |v|
+      v.cpus = 4
+      v.memory = 8192
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  # NOVATIX - NODO 3 EXCLUSIVO DE DATOS
+  config.vm.define :servidorUbuntu3 do |servidorUbuntu3|
+    servidorUbuntu3.vm.box = "bento/ubuntu-22.04"
+    servidorUbuntu3.vm.hostname = "servidorUbuntu3"
+    servidorUbuntu3.vm.box_download_insecure = true
+
+    servidorUbuntu3.vm.network :private_network, ip: "192.168.100.4"
+    servidorUbuntu3.vm.network :forwarded_port, guest: 22, host: 2203, id: "ssh"
+
+
+    servidorUbuntu3.vm.provision "shell", run: "always", inline: "ip route replace 192.168.100.2/32 dev eth1 src 192.168.100.4 metric 10"
+
+    servidorUbuntu3.vm.provider "virtualbox" do |v|
+      v.cpus = 2
+      v.memory = 6144
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+end

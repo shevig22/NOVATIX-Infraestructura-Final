@@ -2,7 +2,7 @@
 
 Proyecto académico de **Redes e Infraestructura**: plataforma de microservicios y analítica distribuida implementada con **Docker Swarm, Node.js, MySQL, HAProxy y Apache Spark 3.5.9**.
 
-> **Estado de consolidación (20/11/2026):** publicados el código de las cinco APIs recuperadas de las imágenes Docker Hub `shevig2208`, el código del dashboard Spark V2, PySpark V2, el `haproxy.cfg` activo y los diagramas. **Aún faltan** los manifiestos de despliegue exactos, el `Vagrantfile` efectivo, la creación/importación de MySQL y pruebas de desempeño para reproducir todo el sistema desde cero.
+> **Estado de consolidación (20/11/2026):** publicados el código de las cinco APIs recuperadas de las imágenes Docker Hub `shevig2208`, el código del dashboard Spark V2, PySpark V2, el `haproxy.cfg` activo y los diagramas. **Aún faltan** validar los manifiestos en un entorno limpio, documentar la importación de MySQL, recuperar los procesos de preparación de datos y medir el desempeño. El `Vagrantfile` efectivo ya está publicado.
 
 ## Arquitectura desplegada
 
@@ -53,10 +53,10 @@ Estas verificaciones **no sustituyen** una prueba de carga, latencia o recuperac
 - `diagramas/`: diagramas editables de despliegue y pipeline publicados.
 - `spark/`: código PySpark V2, runner y documentación publicados.
 - `dashboard/`: servidor Node.js, interfaz web, Dockerfile e instrucciones de la versión Spark V2 publicada.
-- `infraestructura/`: incorporar Vagrant y provisión para los tres nodos.
+- `infraestructura/`: `Vagrantfile` original recuperado y publicado; todavía faltan los scripts de provisión del software.
 - `haproxy/`: configuración completa del balanceador activo.
 - `microservicios/`: código original de las cinco APIs extraído de las imágenes `shevig2208`, con sus Dockerfiles y lockfiles.
-- `docker-swarm/` y `mysql/`: pendientes de incorporar los manifiestos exactos y esquemas de datos.
+- `docker-swarm/`: inventario real de 17 servicios y plantilla YAML no probada para redepliegue; `mysql/`: pendientes de incorporar los esquemas SQL.
 - `diagramas/`, `pruebas/`: diagramas y evidencias.
 
 **Atención:** la configuración del repositorio original [Sant1833/Novatix](https://github.com/Sant1833/Novatix) corresponde a otra topología y **no debe desplegarse sin adaptación** sobre estas máquinas.
