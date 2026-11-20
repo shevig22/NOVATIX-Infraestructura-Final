@@ -18,4 +18,4 @@ Reutilizar Spark Master `novatix_spark_master` en Ubuntu2 y Workers `novatix_spa
 
 `ejecutar-v2-novatix.sh` recoge los parámetros de `spark-submit` con los que se ejecutó Spark V2. Debe ejecutarse como tarea temporal de Swarm, no reemplazando un servicio persistente. El trabajo original quedó en estado `Complete` y observó 2 ejecutores; aún falta evidencia de la ubicación física de ambos.
 
-Ver `pruebas/estado_cluster.sh` para el estado general. Nunca ejecutar `docker stack deploy` del repositorio antiguo sin adaptar las rutas y servicios.
+Ver `pruebas/estado_cluster.sh` para el estado general. No ejecutar `docker stack deploy` en el laboratorio activo con plantillas no verificadas.

@@ -88,3 +88,15 @@ La primera prueba GET en `/api/equipos/1` reportó **360/360 HTTP 200, cero erro
 El despliegue **fue validado**: cinco microservicios Node.js, cuatro réplicas por microservicio, **dos en Ubuntu1 y dos en Ubuntu2**, total **20 instancias**. Las cinco MySQL permanecen en Ubuntu3 y HAProxy V4 balancea entre las cuatro instancias de cada API, con cuatro backends UP por microservicio. [Ver evidencia completa](pruebas/validacion-arquitectura-20-instancias.md).
 
 Las pruebas históricas de rendimiento [1 vs 2 réplicas](pruebas/resultados-escalabilidad-2026-11-20.md) se realizaron **antes** de completar el escalado y no miden la configuración actual con cuatro.
+
+## Guía de reconstrucción y estado de entrega
+
+**Entorno final documentado:** 3 VMs Ubuntu, 5 APIs con **4 réplicas cada una (20/20)**, 5 MySQL, HAProxy V4 y Spark 3.5.9 con dashboard. La restauración tras JMeter fue verificada con **HTTP 200 en cinco endpoints**.
+
+**Para empezar desde cero:** seguir [`documentacion/reproduccion-paso-a-paso.md`](documentacion/reproduccion-paso-a-paso.md). Esa guía incluye comandos de preparación, Vagrant, instalación Docker, `swarm init`, incorporación de workers, etiquetas, overlay, dependencias de bases, orden de despliegue, Spark y pruebas de verificación. **No constituye todavía un instalador certificado**: se deben aportar variables privadas, volúmenes, datos y contrastar la plantilla con las especificaciones reales; no utilizar sobre el laboratorio activo.
+
+**Datos y controles:** [preparación de CSV para Spark](datos/preparar_csv_spark.py), [mapeo `fecha_apuesta` a `fecha`](datos/mapear_apuestas_mysql.py) y [nota de procedencia](datos/README.md). Estas utilidades son **nuevas**, no los scripts históricos del generador sintético; no realizan escrituras en MySQL. Nunca publicar los CSV de Usuarios originales sin retirar nombres, correos, contraseñas y demás campos privados.
+
+**Dashboard:** corregimos en el código fuente la presentación de `equipo_id=0` como **Empate**, tanto en «Ligas y equipos» como en el endpoint de compatibilidad. **El cambio está versionado, pero no fue desplegado sobre el dashboard en ejecución**.
+
+**Pruebas en orden de confianza:** [escalabilidad de Equipos 1→2 réplicas (720/720 GET HTTP 200)](pruebas/resultados-escalabilidad-2026-11-20.md); [balanceo 4/4 por API](pruebas/validacion-arquitectura-20-instancias.md); [estrés exploratorio JMeter 10 vs 20](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md). La corrida con JMeter alcanzó ~21 % de errores, por lo que el +36,4 % observado de RPS **no** es una medición de capacidad sostenible.

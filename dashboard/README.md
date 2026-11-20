@@ -31,3 +31,7 @@ curl -fsS http://192.168.100.3:8090/api/spark/v2
 ```
 
 No hay dependencia JDBC, ni SQL en vivo: los datos proceden de cinco CSV sintéticos procesados por Spark.
+
+## Corrección semántica 20/11/2026
+
+En las apuestas simuladas, `equipo_id=0` identifica **Empate**, no un equipo. La interfaz `public/app.js` transforma solamente la etiqueta mostrada del top y la tabla; el endpoint de compatibilidad `/api/dashboard` aplica la misma regla. El JSON de Spark original no se modifica. **Cambio publicado en código, no desplegado en el clúster**. La copia instalada del dashboard puede necesitar rebuild/redeploy controlado y verificación posterior, sin tocar Spark ni las cinco MySQL.

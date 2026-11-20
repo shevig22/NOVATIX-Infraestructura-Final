@@ -51,3 +51,7 @@ En las tablas `apuestas` y `dinero` de MySQL el campo temporal es **`fecha`**; e
 ## Seguridad
 
 La columna `usuarios.password` forma parte del esquema; **no se exportó ningún valor**. El código original de la API de usuarios usa verificación de contraseñas en texto plano, problema conocido para producción. Los esquemas por sí solos no se consideran un sistema seguro.
+
+## Diferencia comprobada de columnas Apuestas (Spark / MySQL)
+
+En el CSV usado por Spark el campo temporal se llama `fecha_apuesta`, mientras que el esquema transaccional `mysql/esquemas/apuestas.sql` utiliza `fecha`. No renombrar la columna de la base activa: la utilidad [`datos/mapear_apuestas_mysql.py`](../datos/mapear_apuestas_mysql.py) genera un nuevo CSV adaptado, de solo lectura respecto a MySQL. La importación relacional **no está automatizada ni validada**: antes de usarla en una instalación nueva comprobar claves, tipos, delimitación, IDs relacionados y permisos; nunca ejecutar sobre las bases desplegadas con datos persistentes sin backup.

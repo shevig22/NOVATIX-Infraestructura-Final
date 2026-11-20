@@ -41,3 +41,17 @@ Las tablas MySQL `apuestas` y `dinero` manejan la columna `fecha`, mientras que 
 ## Paquete completo verificado
 
 Se revisó el contenido del archivo `novatix_datos_spark_v2_20261120_025952.tar.gz` (3.718.237 bytes, SHA-256 `cd7856d351e74c87cf6510e4a24b03db5dec3c00d5a2775c2b50a6af14c5687c`). Contiene los cinco CSV y el reporte JSON V2. Los cinco hashes de CSV coinciden con el manifiesto. La fuente pública Transfermarkt declara CC0 en sus metadatos. La revisión encontró datos futbolísticos y datos transaccionales simulados, sin columnas directas de contraseñas, emails o documentos. La publicación del archivo **aún está pendiente**; el paquete puede cargarse mediante la interfaz web de GitHub a este directorio para reproducir el pipeline. Ver [resultados verificados](../documentacion/resultados-spark-v2.md).
+
+## Herramientas nuevas de preparación
+
+- [`preparar_csv_spark.py`](preparar_csv_spark.py): recibe los **cinco CSV originales** en una carpeta, exige que los encabezados necesarios existan y escribe una carpeta nueva para Spark. En `usuarios.csv` conserva únicamente `id`, `fecha_registro`, `estado` y `rol`; **no arrastra nombres, emails, usuarios ni contraseñas** que puedan existir en archivos de origen. No importa a MySQL y **no reproduce** el generador histórico de cuotas/apuestas.
+- [`mapear_apuestas_mysql.py`](mapear_apuestas_mysql.py): traduce el encabezado `fecha_apuesta` del CSV analítico al `fecha` de la tabla relacional `apuestas` y produce **otro CSV**; no ejecuta SQL ni modifica esquemas/volúmenes. Validar tipos, claves y transacciones antes de importarlo en entorno vacío.
+
+Ejemplo (fuera del clúster productivo):
+
+```bash
+python3 datos/preparar_csv_spark.py --entrada ./csv_originales --salida ./csv_spark_preparados
+python3 datos/mapear_apuestas_mysql.py --entrada ./csv_spark_preparados/apuestas.csv --salida ./apuestas_mysql_importacion.csv
+```
+
+**Privacidad:** los CSV de origen pueden contener campos personales o contraseñas en texto claro. No publicar los originales. El archivo para Spark reduce columnas de Usuarios, pero sigue requiriendo revisión antes de redistribución pública, al igual que las rutas de escudos, vínculos entre identificadores y la licencia de las fuentes.

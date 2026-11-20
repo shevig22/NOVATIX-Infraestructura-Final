@@ -52,7 +52,7 @@ const server = http.createServer((req, res) => {
       }
       if (pathname === '/api/dashboard') {
         // Compatibilidad básica: se incluyen agregados y los nombres de colección anteriores.
-        const topTeams = data.top_equipos.map(x=>({name:x.nombre,pais:x.pais,liga:x.liga,
+        const topTeams = data.top_equipos.map(x=>({name:Number(x.eq_id)===0?'Empate':x.nombre,pais:x.pais,liga:x.liga,
           apuestas:x.apuestas,volumen:x.volumen_apostado,pagado:x.pago_teorico,
           balance:x.balance_teorico,cuota:x.cuota_promedio}));
         const leagues = data.ligas.map(x=>({pais:x.pais,liga:x.liga,partidos:x.partidos,
