@@ -13,7 +13,7 @@
 | Carga, latencia, escalabilidad y estrés | No hay mediciones comparativas reproducibles registradas aquí | Pendiente |
 | Reinicio y persistencia de red | No se realizó prueba final tras reinicio | Pendiente |
 | Informe IEEE y presentación | Entregables requeridos por profesor | Pendiente |
-| Reproducibilidad desde GitHub | Ya hay fuentes de 5 APIs, Spark V2, dashboard, HAProxy y diagramas; faltan stack, Vagrant y MySQL | En preparación |
+| Reproducibilidad desde GitHub | Código de cinco APIs, Spark V2, dashboard, HAProxy y diagramas; Vagrantfile publicado, inventario Swarm y plantilla no validada, cinco esquemas MySQL vacíos; siguen pendientes instalación limpia y datos de prueba | Parcial |
 
 ## Spark V2 — resultados observados
 
@@ -31,8 +31,8 @@ No fabricar métricas de desempeño que todavía no se hayan medido. Explicar qu
 
 ## Siguiente importación a GitHub
 
-1. Exportar el `Vagrantfile` efectivo y los scripts de provisión de los tres nodos.
-2. Exportar **sin credenciales** la configuración efectiva de los servicios y redes Docker Swarm.
-3. Incorporar esquemas e importación MySQL sin datos sensibles.
+1. Vagrantfile efectivo publicado. Recuperar los scripts de instalación del software por nodo.
+2. Inventario sanitizado de 17 servicios publicado; validar el manifiesto de Docker Swarm en entorno aislado.
+3. Cinco esquemas MySQL publicados; recuperar o regenerar datos de ejemplo sin datos sensibles.
 4. Añadir evidencias reproducibles de carga, latencia y escalabilidad.
 5. Finalizar informe IEEE, presentación y guía paso a paso.
