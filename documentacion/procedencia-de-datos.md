@@ -27,7 +27,7 @@ Para reconstruir el dataset aún debe publicarse alguno de estos mecanismos:
 1. Fuente y versión descargada de Kaggle (archivos y fecha/versionado), con licencia/condiciones de redistribución revisadas.
 2. Script de limpieza, normalización y mapeo desde los CSV de origen a `equipos.csv` y `partidos.csv`, **si existe y se conserva**.
 3. Script y semilla de generación de usuarios/apuestas/dinero, **si se utilizaron**.
-4. **Completado:** inventario de nombres de columna, cantidades y SHA-256 de los cinco CSV en [`datos/manifest-csv-v2.json`](../datos/manifest-csv-v2.json); faltan los contenidos/generadores.
+4. **Completado:** cinco CSV preparados publicados en [`datos/`](../datos/README.md), inventario de columnas, cantidades y SHA-256 en [`manifest-csv-v2.json`](../datos/manifest-csv-v2.json); **falta el generador histórico y la transformación exacta de Kaggle**.
 5. Solo cuando proceda según la licencia, archivos de entrada/salida sin credenciales ni datos personales.
 
 No inventar una transformación histórica que todavía no se haya podido recuperar.

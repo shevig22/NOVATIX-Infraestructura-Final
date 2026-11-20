@@ -27,6 +27,7 @@ id_ed25519
 
 # Datos operativos y respaldos
 *.sql
+!mysql/esquemas/*.sql
 *.sql.gz
 *.bak
 *.log
@@ -40,4 +41,3 @@ respaldos/
 
 # No subir CSV original de usuarios con contraseñas en texto plano
 Dataset/usuarios.csv
-datos/usuarios.csv

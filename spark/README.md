@@ -6,7 +6,7 @@ Código PySpark que se ejecutó en el clúster de 3 nodos y produjo el reporte V
 
 El script `analisis_novatix_v2.py` lee, desde `/datos`, estos cinco CSV preparados (datos futbolísticos de referencia y datos complementarios simulados, según el equipo): `usuarios.csv`, `equipos.csv`, `partidos.csv`, `apuestas.csv` y `dinero.csv`. El CSV de usuarios utilizado en el clúster contiene solamente los campos analíticos necesarios (no contraseñas).
 
-Consulta el [inventario verificado de los CSV](../datos/README.md) con cantidad de filas, campos y SHA-256. Los CSV originales todavía no forman parte del repositorio.
+Consulta [los cinco CSV y su manifiesto verificado](../datos/README.md). Antes de ejecutar Spark en otra VM, monta la carpeta `datos/` del clon en `/datos` dentro del contenedor. Los cinco CSV **preparados y verificados** ya se publicaron en [datos/](../datos/README.md). No están los CSV transaccionales originales con campos personales; no son necesarios para Spark.
 
 ## Salida
 
