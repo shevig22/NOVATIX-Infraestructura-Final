@@ -28,3 +28,7 @@
 ## Probador incorporado
 
 La primera medición utiliza el script [`carga_segura.py`](carga_segura.py) sobre un solo equipo: `GET /api/equipos/1`, con 1, 10 y 25 solicitudes simultáneas y un máximo de 120 solicitudes por escenario. Ver [instrucciones](README-carga.md). No escalar ni reiniciar servicios en esta primera ronda.
+
+## Comparación ejecutada (20/11/2026)
+
+Se registró en la consola [ensayo real 1 vs 2](resultados-escalabilidad-2026-11-20.md): 720/720 HTTP 200, restauración 2/2, throughput superior con dos réplicas en los tres escenarios. Esta medición **no valida** una topología con cuatro réplicas por microservicio ni un total de veinte instancias.

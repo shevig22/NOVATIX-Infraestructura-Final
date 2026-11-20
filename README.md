@@ -78,3 +78,9 @@ Ver [resultados analíticos verificados](documentacion/resultados-spark-v2.md) y
 ### Primeros resultados de carga (20/11/2026)
 
 La primera prueba GET en `/api/equipos/1` reportó **360/360 HTTP 200, cero errores** y reparto exacto **180/180** entre dos réplicas. Se midieron **152,86; 379,70 y 594,33 RPS** para concurrencias **1, 10 y 25** respectivamente. [Tabla completa y advertencias](pruebas/resultados-carga-2026-11-20.md). Estos datos son una primera medición; todavía no equivalen a comparar el rendimiento con una o dos réplicas, y falta adjuntar el JSON bruto.
+
+## Arquitectura actual vs. objetivo de veinte instancias
+
+La implementación verificada tiene **10 instancias de microservicios** (5 APIs × 2 réplicas en total, una en Ubuntu1 y otra en Ubuntu2). Las capturas de diseño compartidas originalmente describen esta distribución. El equipo ha aclarado posteriormente una **propuesta de 20 instancias** (5 APIs × 4 réplicas en total, 2 por nodo); no se ha desplegado ni validado todavía. Consultar [diferencias y cambios requeridos](documentacion/arquitectura-actual-vs-objetivo-20.md). No cambiar el número de réplicas en el informe presentado como «implementado» hasta verificar el despliegue.
+
+**Escalabilidad ya medida:** [comparación real 1 frente a 2 réplicas de Equipos](pruebas/resultados-escalabilidad-2026-11-20.md), con 720/720 HTTP 200, aumentos de RPS del 25,0 % al 63,2 % y restauración final 2/2.
