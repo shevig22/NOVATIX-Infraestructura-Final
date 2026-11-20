@@ -75,9 +75,12 @@ principal() {
   return 1
 }
 
+ESTADO=SI
 if principal; then
   echo 'FASE=COMPLETADA'
 else
   echo 'FASE=REVISAR_ANTES_DE_DESPLEGAR'
+  ESTADO=NO
 fi
 echo '=== FIN ==='
+[ "$ESTADO" = 'SI' ]
