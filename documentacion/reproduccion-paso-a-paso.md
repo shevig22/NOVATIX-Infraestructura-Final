@@ -89,8 +89,85 @@ curl -fsS http://192.168.100.3:8090/api/health
 curl -fsS http://192.168.100.3:8090/api/spark/v2
 ```
 
-## 6. Validación y limitaciones
+## 6. Publicar el frontend Apache de NOVATIX (fase manual, aún no reproducible solo desde GitHub)
+
+**Cambio incorporado el 20/11/2026:** la instalación real sirve el frontend en `servidorUbuntu1` desde `/var/www/html2`, mediante Apache. En ese directorio se encuentran `index.html`, `app.js` y `estilos.css`. **La fuente exacta de esa carpeta aún no está publicada en este repositorio**: por tanto, clonar GitHub no crea todavía el frontend transaccional.
+
+### Requisitos que debe completar el equipo antes de declarar esta fase reproducible
+
+1. Exportar de Ubuntu1 una copia **saneada** de `index.html`, `app.js` y `estilos.css` y colocarla en una carpeta versionada para frontend. Revisar dominios, IP, claves y datos sensibles antes del commit.
+2. Documentar el VirtualHost de Apache en Ubuntu1, `DocumentRoot /var/www/html2`, módulos necesarios y mapeo de rutas de la API a HAProxy en Ubuntu2. No copiar secretos del servidor.
+3. Instalar Apache en un **laboratorio nuevo**, publicar los archivos del paso 1, habilitar el VirtualHost y ejecutar `sudo apache2ctl configtest` antes de recargar Apache.
+4. Abrir el sitio desde el navegador de prueba y comprobar login, navegación, consulta de partidos y, con datos simulados de prueba, las operaciones permitidas de apuestas. No basta con obtener HTTP 200 para concluir que el frontend funciona.
+
+En Ubuntu1, la optimización de emergencia deshabilitó la carga automática de todos los partidos y del listado administrativo de equipos. Ahora existe el botón **«Ver primeros 20 partidos»**, que solicita `?page=1&limit=20` y limita a 20 tarjetas la representación en el navegador. **La API original desplegada todavía puede devolver todos los registros**, porque la paginación real del backend no se ha desplegado. La lista administrativa de equipos aún presenta límites de rendimiento.
+
+> No utilizar los scripts o respaldos de producción como instaladores universales. No ejecutar cambios sobre el Ubuntu1 original solo para seguir esta guía.
+
+## 7. Paginación de las API Partidos y Equipos (fuente local pendiente de subir)
+
+El 20/11/2026 se modificaron **seis archivos** en un clon de Ubuntu2, con commit local `a2dbe75`. En el momento de esta actualización **el push HTTPS continúa rechazado con 403**, por lo que esas modificaciones aún **no** deben suponerse disponibles al clonar `main` desde GitHub.
+
+Los cambios previstos conservan las rutas anteriores sin parámetros y añaden:
+
+| Solicitud | Respuesta esperada con backend nuevo |
+|---|---|
+| `GET /api/partidos?page=1&limit=20` | Objeto `{items, page, limit, hasMore}`; SQL con límite y desplazamiento |
+| `GET /api/equipos?page=1&limit=20` | Objeto `{items, page, limit, hasMore}` |
+| `GET /api/equipos?page=1&limit=20&q=nombre` | Equipos que coinciden con el prefijo buscado |
+| `GET /api/partidos` o `GET /api/equipos` | Arreglo anterior, **sin paginación**, por compatibilidad |
+
+**Validación pendiente en un laboratorio nuevo**, una vez publicado el código: confirmar `node --check`, instalar dependencias desde el `package-lock` versionado, construir imágenes locales con etiquetas **nuevas**, consultar MySQL con datos de prueba, verificar primera y última página, parámetros inválidos, compatibilidad sin parámetros y búsqueda por prefijo. No sustituir imágenes del Swarm activo con una versión sin pruebas ni plan de reversión.
+
+Las imágenes `novatix-partidos:paginacion-r7-local` y `novatix-equipos:paginacion-r7-local` fueron construidas únicamente en Ubuntu2 y sus pruebas aisladas usaron datos simulados, **no MySQL real**. Un clon nuevo de GitHub no recibe esas imágenes locales y la plantilla de Swarm conserva las versiones desplegadas históricas.
+
+## 8. Incorporar el dashboard Spark al panel administrativo (fase manual)
+
+En el laboratorio original, Ubuntu1 sirve una **integración visual** de Spark dentro del panel de administración:
+
+| Archivo / configuración real | Propósito |
+|---|---|
+| `/var/www/html2/index.html` | Tarjeta «Analítica Spark» con botón e iframe |
+| `/var/www/html2/spark-integracion.js` | Apertura bajo demanda y comprobación **solo del lado del cliente** |
+| `/var/www/html2/spark-dashboard.html` | Interfaz del dashboard adaptada a las rutas del frontend |
+| `/var/www/html2/spark-dashboard-app.js` | Consulta a `/novatix-spark-api/v2` |
+| `/var/www/html2/spark-dashboard-styles.css` | Estilos del dashboard |
+| `/etc/apache2/conf-available/novatix-spark-proxy.conf` | Proxy inverso hacia `http://192.168.100.3:8090/api/spark/` |
+
+**Esta configuración y los archivos adaptados de Ubuntu1 aún no están versionados:** no se puede reconstruir la integración desde GitHub sin recopilar y sanear esos originales. Para reconstruir en una VM nueva, se debe incluir el frontend del apartado 6, habilitar Apache `proxy` / `proxy_http`, adaptar rutas al laboratorio y comprobar `apache2ctl configtest` antes de reiniciar o recargar el servicio.
+
+Verificaciones orientativas **desde Ubuntu1 del laboratorio de pruebas**, una vez terminada la instalación:
+
+```bash
+curl -sS -o /dev/null -w 'HTML=%{http_code}\n' http://127.0.0.1/spark-dashboard.html
+curl -sS -o /dev/null -w 'JS=%{http_code}\n' http://127.0.0.1/spark-dashboard-app.js
+curl -sS -o /dev/null -w 'CSS=%{http_code}\n' http://127.0.0.1/spark-dashboard-styles.css
+curl -sS -o /dev/null -w 'API=%{http_code}\n' http://127.0.0.1/novatix-spark-api/v2
+```
+
+**Criterio de aceptación:** HTTP 200 en las cuatro rutas **y** dashboard que renderiza indicadores reales al abrirlo desde el panel, comprobado en navegador. El ensayo S2 original validó configuración de Apache y cuatro respuestas 200, pero no ha aportado evidencia completa de navegación.
+
+**Seguridad no terminada:** ocultar una tarjeta en el frontend consultando `usuarioActual.rol` o `localStorage` **no protege la URL ni la API**. No se debe presentar el dashboard como privado por rol hasta implementar validación de sesión y autorización en el servidor, restringir el acceso directo a Ubuntu2:8090 y revisar el proceso de registro de administradores. No exponer esta versión académica a Internet.
+
+## 9. Validación y limitaciones
 
 Realizar la prueba de balanceo de cuatro réplicas por servicio y registrar las respuestas `X-Replica`/stats HAProxy. Los ensayos históricos están en [`pruebas/`](../pruebas/). El ensayo limpio 1→2 réplicas logró **720/720 HTTP 200** y el estrés JMeter exploratorio de 10 vs 20 acumuló ~21 % de errores. No atribuir esos fallos al servidor sin sus códigos y JTL.
 
-**Faltantes identificados:** generador histórico de datos sintéticos, transformación exacta de Kaggle, datos relacionales para MySQL y generador histórico, automatización integral de Spark y volúmenes, valores de entorno protegidos, importadores de MySQL validados, campaña JMeter no gráfica repetida. Hasta completarlos, esta guía es un **paso a paso orientativo** y el repositorio sigue siendo parcialmente reproducible.
+### Matriz de comprobación para una entrega académica
+
+| Parte | Material versionado | ¿Repetible desde un clon limpio? | Evidencia exigible |
+|---|---|---|---|
+| Vagrant / topología | `infraestructura/Vagrantfile` | **Parcial**: crea VMs, no instala toda la pila | `vagrant validate`, `vagrant status`, IP de los tres nodos |
+| Swarm / HAProxy | Plantilla + archivo candidato | **No demostrado de extremo a extremo** | servicios 4/4, MySQL 1/1, balanceo entre nodos |
+| Datos / Spark V2 | Cinco CSV + script + manifiesto | **Sí para verificación de CSV; parcial para Spark distribuido** | verificador sin errores; job Complete; 11 secciones del JSON |
+| Dashboard Spark independiente | Código y Dockerfile del servicio | **Parcial**: empaquetado disponible, no validado en instalación nueva | contenedor de pruebas, `/api/health`, indicadores visibles |
+| Frontend NOVATIX | **Faltan fuentes reales** | **No** | Apache, login y consulta funcional |
+| Integración Spark en frontend | **Faltan archivos adaptados y conf Apache** | **No** | panel abre dashboard, proxy retorna datos, autorización validada |
+| API paginada nueva | **Commit solo local en Ubuntu2 al 20/11/2026** | **No desde `main` remoto todavía** | fuentes publicadas, MySQL real, pruebas de páginas |
+| Rendimiento JMeter | Tablas/resúmenes | **No completamente**: faltan planes y resultados crudos | JMX, JTL, mismo escenario, tasa de error documentada |
+
+**Faltantes principales:** generación histórica y transformación exacta de Kaggle, carga transaccional de MySQL, automatización de Swarm/Spark/volúmenes, credenciales seguras, publicación saneada del frontend y sus archivos Spark, publicación del commit de paginación, pruebas de navegador y repetición de JMeter con JMX/JTL.
+
+**Conclusión:** esta guía permite seguir la arquitectura por etapas y verificar los componentes que cuentan con materiales. **No certifica una instalación integral desde cero.** Para cumplir un requisito estricto de reproducción total, el equipo debe completar y probar las etapas marcadas «No» antes de afirmar que cualquier tercero puede instalar NOVATIX usando únicamente este repositorio.
+
+Consulta los [avances fechados](avances-frontend-spark-paginacion-2026-11-20.md) y la [auditoría de reproducibilidad](auditoria-reproducibilidad-2026-11-20.md).
