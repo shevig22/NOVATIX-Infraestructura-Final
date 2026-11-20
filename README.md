@@ -2,9 +2,9 @@
 
 Proyecto académico de **Redes e Infraestructura**: plataforma de microservicios y analítica distribuida implementada con **Docker Swarm, Node.js, MySQL, HAProxy y Apache Spark 3.5.9**.
 
-> **Estado de consolidación (20/11/2026):** publicados el código de las cinco APIs recuperadas de las imágenes Docker Hub `shevig2208`, el código del dashboard Spark V2, PySpark V2, el `haproxy.cfg` activo y los diagramas. **20 instancias de API implementadas y validadas** (cuatro réplicas por microservicio, dos en Ubuntu1 y dos en Ubuntu2). Pendientes: instalación limpia, datos reproducibles y medición de carga del despliegue final. El `Vagrantfile` efectivo ya está publicado.
+> **Estado de consolidación (20/11/2026):** publicados el código de las cinco APIs recuperadas de las imágenes Docker Hub `shevig2208`, el código del dashboard Spark V2, PySpark V2, el `haproxy.cfg` activo y los diagramas. **Arquitectura de 20 instancias implementada y validada previamente** (cuatro réplicas por microservicio, dos en Ubuntu1 y dos en Ubuntu2); el laboratorio se redujo posteriormente a 10 para la comparación experimental. Pendientes: instalación limpia, datos reproducibles y **validación formal repetida del estrés**; ya existe una comparación exploratoria de JMeter entre 10 y 20 instancias. El `Vagrantfile` efectivo ya está publicado.
 
-## Arquitectura desplegada
+## Arquitectura definitiva (verificada antes del ensayo; el laboratorio se redujo después a 10 para pruebas)
 
 | Nodo | IP privada | Responsabilidades |
 |---|---|---|
@@ -76,6 +76,12 @@ Ver [resultados analíticos verificados](documentacion/resultados-spark-v2.md) y
 ### Primeros resultados de carga (20/11/2026)
 
 La primera prueba GET en `/api/equipos/1` reportó **360/360 HTTP 200, cero errores** y reparto exacto **180/180** entre dos réplicas. Se midieron **152,86; 379,70 y 594,33 RPS** para concurrencias **1, 10 y 25** respectivamente. [Tabla completa y advertencias](pruebas/resultados-carga-2026-11-20.md). Estos datos son una primera medición; todavía no equivalen a comparar el rendimiento con una o dos réplicas, y falta adjuntar el JSON bruto.
+
+## Ensayos exploratorios de estrés JMeter (10 frente a 20 instancias)
+
+[Análisis comparativo y texto para el informe IEEE](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md). Se observaron **403,3 frente a 550,2 solicitudes/s** y **99 frente a 64 ms de latencia media** respectivamente; la diferencia de throughput mostrada fue de **+36,4 %** con 20. Ambas corridas acumularon alrededor de **21 % de errores** y se ejecutaron con receptores gráficos, por lo que **no prueban todavía capacidad sostenible**. El operador reportó síntomas tempranos de ralentización con diez instancias; sin JTL no puede datarse con precisión el primer error.
+
+**Estado del laboratorio durante la comparativa:** el despliegue de veinte instancias fue verificado antes de los ensayos y después se redujeron las API a **10 instancias (2/2 cada una)** para la prueba; la auditoría `ESCENARIO_10=VALIDADO` confirmó cinco API, cinco MySQL y HAProxy operativos. No dar por hecho que el clúster ha vuelto ya a 20 instancias.
 
 ## Arquitectura definitiva implementada: veinte instancias
 

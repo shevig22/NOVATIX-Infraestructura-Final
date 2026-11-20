@@ -19,7 +19,7 @@
 
 ## Precauciones
 
-- NO comparar 2 vs 4 réplicas: con Ubuntu1/Ubuntu2 para API y `MaxReplicas=1`, el diseño no tiene cuatro ubicaciones válidas.
+- La arquitectura **sí admite** comparar 2 vs 4 réplicas globales por API: fijar `MaxReplicas=1` con 2 réplicas (una por nodo) y `MaxReplicas=2` con 4 réplicas (dos por nodo). **No modificar el número de nodos, HAProxy ni MySQL entre pruebas**.
 - NO reiniciar Ubuntu3 (bases MySQL) ni Ubuntu2 (HAProxy y Manager) como primera prueba.
 - NO usar GET con modificaciones, ni generar apuestas o movimientos reales.
 - Resultados de HAProxy 50/50 anteriores solo verifican distribución; no sustituyen latencia, throughput o pruebas de estrés.
@@ -36,3 +36,7 @@ Se registró en la consola [ensayo real 1 vs 2](resultados-escalabilidad-2026-11
 ## Arquitectura final implementada: pruebas por realizar
 
 Las **20 instancias** (cuatro réplicas por servicio, dos por nodo) se validaron operacionalmente el 20/11/2026. Consultar [evidencia final](validacion-arquitectura-20-instancias.md). Las métricas RPS previas describen **una y dos réplicas**, por lo que aún falta repetir carga sobre las cuatro del estado definitivo.
+
+## Ensayo exploratorio registrado: 10 frente a 20 instancias
+
+[Comparativa con JMeter y observaciones del operador](comparativa-jmeter-10-vs-20-2026-11-20.md): 403,3 frente a 550,2 peticiones por segundo mostradas, latencia media 99 frente a 64 ms, y ~21 % de errores en ambos. Se observó visualmente lentitud y errores incipientes con diez; el inicio exacto de fallos requiere análisis del JTL. El plan de medición formal debe usar JMeter **no gráfico**, muestras individuales, carga creciente reproducible, ventanas de porcentaje de error y un límite máximo de duración.

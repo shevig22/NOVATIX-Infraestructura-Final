@@ -12,8 +12,9 @@
 | Retiro de dashboard duplicado 8093 | La auditoría final muestra únicamente `novatix_dashboard` | Verificado |
 | Carga y latencia inicial | Primera prueba GET de equipos: 360/360 HTTP 200, 50/50 entre réplicas; RPS 152,86–594,33; p95 8,50–95,77 ms; JSON pendiente | Evidencia textual |
 | Escalabilidad de Equipos (1 vs 2) | 720/720 HTTP 200, cero errores, RPS aumentó de 25,0 % a 63,2 % según la concurrencia, servicio restaurado a 2/2 | Verificado por salida textual; JSON pendiente |
-| Carga con cuatro réplicas y recuperación ante fallos | Aún no medidos en la topología definitiva | Pendiente |
-| Arquitectura definitiva 20 instancias | 4/4 por API, máximo 2 por nodo; 10 Ubuntu1 + 10 Ubuntu2; 5 MySQL en Ubuntu3 | **Implementada y validada** |
+| Estrés JMeter 10 vs 20 | Primera comparación exploratoria de dos API: 403,3 vs 550,2 solicitudes/s; latencia media 99 vs 64 ms; ~21 % errores en ambas; observaciones visuales de ralentización anterior con diez | Registrado; requiere JTL y repetición no gráfica |
+| Recuperación ante fallos / estrés reproducible | Aún no medida de forma controlada con métricas de intervalos y p95 | Pendiente |
+| Arquitectura definitiva 20 instancias | 4/4 por API, máximo 2 por nodo; 10 Ubuntu1 + 10 Ubuntu2; 5 MySQL en Ubuntu3; posteriormente reducida a 10 para experimento | **Implementada y verificada históricamente; laboratorio actualmente en 10 según última auditoría** |
 | Reinicio y persistencia de red | No se realizó prueba final tras reinicio | Pendiente |
 | Informe IEEE y presentación | Entregables requeridos por profesor | Pendiente |
 | Reproducibilidad desde GitHub | Código de cinco APIs, Spark V2, dashboard, HAProxy y diagramas; Vagrantfile publicado, inventario Swarm y plantilla no validada, cinco esquemas MySQL vacíos; siguen pendientes instalación limpia y datos de prueba | Parcial |
@@ -39,3 +40,7 @@ No fabricar métricas de desempeño que todavía no se hayan medido. Explicar qu
 3. Cinco esquemas MySQL publicados; recuperar o regenerar datos de ejemplo sin datos sensibles.
 4. Publicar los JSON brutos de pruebas históricas y medir carga de 4 réplicas; las 20 instancias ya están implementadas y verificadas.
 5. Finalizar informe IEEE, presentación y guía paso a paso.
+
+## Comparación JMeter de diez y veinte instancias (evidencia exploratoria)
+
+[Resultados, cronología de errores, observaciones de lentitud y limitaciones metodológicas](../pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md). En el escenario de diez instancias el equipo reportó percepción de errores leves y lentitud antes que con veinte. La evidencia resumida **no determina los tiempos exactos del primer error**; registrar la observación cualitativa sin convertirla en umbral certificado. Es necesario verificar códigos HTTP de fallos y obtener archivos JTL.

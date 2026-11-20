@@ -42,3 +42,7 @@ Los cinco servicios MySQL (`db-usuarios`, `db-equipos`, `db-partidos`, `db-apues
 4. Actualizar las diapositivas e informe IEEE con la cifra **20 instancias implementadas**, sin confundir la prueba histórica de 1 contra 2 con el desempeño de cuatro.
 
 No se realizaron cambios en Docker Swarm durante la auditoría final.
+
+## Nota de estado posterior a la validación
+
+La auditoría de 20 instancias documentada arriba es histórica y fue correcta en el momento de ejecutarse. **Posteriormente** el equipo redujo las cinco API a **2/2 por servicio (10 instancias)** para un ensayo comparativo JMeter, manteniendo cinco MySQL y HAProxy. La última auditoría comunicada confirmó `ESCENARIO_10=VALIDADO`; no afirmar que el laboratorio esté ahora mismo en 20 sin una nueva comprobación. [Comparación JMeter](comparativa-jmeter-10-vs-20-2026-11-20.md).
