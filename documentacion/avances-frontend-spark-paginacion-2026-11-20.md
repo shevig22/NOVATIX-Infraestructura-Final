@@ -4,7 +4,7 @@ Este documento distingue cambios **aplicados al laboratorio**, **pruebas aislada
 
 ## 1. Backend: paginación de Partidos y Equipos
 
-En `servidorUbuntu2` se editaron las copias locales de:
+En `servidorUbuntu2` se editaron las copias locales y, posteriormente, **el parche exacto de seis archivos se publicó en `main` en el commit [`593e8213`](https://github.com/shevig22/NOVATIX-Infraestructura-Final/commit/593e8213d0ef85551dd084822211f2928165fc56)**:
 
 - `microservicios/partidos/src/controllers/partidosController.js`
 - `microservicios/partidos/src/models/partidosModel.js`
@@ -12,7 +12,7 @@ En `servidorUbuntu2` se editaron las copias locales de:
 - `microservicios/equipos/src/models/equiposModel.js`
 - `microservicios/partidos/package.json` y `package-lock.json` (dependencia `axios`, utilizada por el controlador).
 
-**Contrato nuevo, preparado localmente, pendiente de desplegar en las réplicas Swarm:**
+**Contrato nuevo, versionado en GitHub, pendiente de desplegar en las réplicas Swarm:**
 
 - `GET /api/partidos?page=1&limit=20`: responde `{items, page, limit, hasMore}`. Consulta SQL ordenada por `id DESC` con `LIMIT` y `OFFSET`.
 - `GET /api/equipos?page=1&limit=20&q=...`: misma estructura; búsqueda por prefijo de nombre.
@@ -59,7 +59,7 @@ Respaldo S2: `/var/backups/novatix-integracion-spark/spark_s2_20261120_145053/`.
 
 ## 4. Trabajo pendiente prioritario
 
-1. Sincronizar al repositorio el commit local `a2dbe75` del backend en Ubuntu2. El push HTTPS devolvió 403; el parche local generado es `/home/vagrant/novatix-paginacion.patch` y aún no se ha recibido adjunto.
+1. **Completado:** el parche `/home/vagrant/novatix-paginacion.patch` se recibió y aplicó íntegramente a `main` como `593e8213`. **Pendiente:** pruebas contra MySQL real y despliegue controlado de las nuevas imágenes en ambos nodos.
 2. El frontend Ubuntu1 **ya está publicado y verificado por hashes**; falta capturar el VirtualHost original para reproducir todas las rutas de Apache/HAProxy. No subir credenciales ni secretos.
 3. Probar las consultas paginadas contra MySQL real sin modificar registros; desplegar imágenes con etiquetas nuevas disponibles en ambos nodos y con posibilidad de rollback.
 4. Adaptar la administración de equipos para buscar/seleccionar sin descargar todos; confirmar paginación en la API ya desplegada.
