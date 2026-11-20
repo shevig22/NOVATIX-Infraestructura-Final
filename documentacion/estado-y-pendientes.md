@@ -14,7 +14,7 @@
 | Escalabilidad de Equipos (1 vs 2) | 720/720 HTTP 200, cero errores, RPS aumentó de 25,0 % a 63,2 % según la concurrencia, servicio restaurado a 2/2 | Verificado por salida textual; JSON pendiente |
 | Estrés JMeter 10 vs 20 | Primera comparación exploratoria de dos API: 403,3 vs 550,2 solicitudes/s; latencia media 99 vs 64 ms; ~21 % errores en ambas; observaciones visuales de ralentización anterior con diez | Registrado; requiere JTL y repetición no gráfica |
 | Recuperación ante fallos / estrés reproducible | Aún no medida de forma controlada con métricas de intervalos y p95 | Pendiente |
-| Arquitectura definitiva 20 instancias | 4/4 por API, máximo 2 por nodo; 10 Ubuntu1 + 10 Ubuntu2; 5 MySQL en Ubuntu3; posteriormente reducida a 10 para experimento | **Implementada y verificada históricamente; laboratorio actualmente en 10 según última auditoría** |
+| Arquitectura definitiva 20 instancias | 4/4 por API, máximo 2 por nodo; 10 Ubuntu1 + 10 Ubuntu2; 5 MySQL en Ubuntu3; reducida temporalmente a 10 y **restaurada a 20** tras el ensayo, con cinco API HTTP 200 | **20/20 activo según la última validación** |
 | Reinicio y persistencia de red | No se realizó prueba final tras reinicio | Pendiente |
 | Informe IEEE y presentación | Entregables requeridos por profesor | Pendiente |
 | Reproducibilidad desde GitHub | Código de cinco APIs, Spark V2, dashboard, HAProxy y diagramas; Vagrantfile publicado, inventario Swarm y plantilla no validada, cinco esquemas MySQL vacíos; siguen pendientes instalación limpia y datos de prueba | Parcial |
@@ -44,3 +44,7 @@ No fabricar métricas de desempeño que todavía no se hayan medido. Explicar qu
 ## Comparación JMeter de diez y veinte instancias (evidencia exploratoria)
 
 [Resultados, cronología de errores, observaciones de lentitud y limitaciones metodológicas](../pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md). En el escenario de diez instancias el equipo reportó percepción de errores leves y lentitud antes que con veinte. La evidencia resumida **no determina los tiempos exactos del primer error**; registrar la observación cualitativa sin convertirla en umbral certificado. Es necesario verificar códigos HTTP de fallos y obtener archivos JTL.
+
+## Estado final del laboratorio tras el experimento
+
+Se restauraron las cinco API a **4/4** y dos por nodo, sumando **20 instancias**; los MySQL permanecen 1/1 y HAProxy 1/1. La última salida reporta cinco endpoints HTTP 200 y `NOVATIX=20_INSTANCIAS_RESTAURADAS`. [Acta de restauración](../pruebas/restauracion-final-20-2026-11-20.md). El estado de 10 instancias ya es histórico.

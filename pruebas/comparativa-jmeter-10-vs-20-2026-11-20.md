@@ -54,7 +54,7 @@ El aumento del tiempo entre incrementos del contador también puede proceder de 
 - Repetir **el mismo plan** en modo no gráfico, misma mezcla GET, hardware, ramp-up y fases de carga con incrementos escalonados y duración máxima de seguridad; idealmente varias corridas en cada arquitectura, alternando el orden de prueba.
 - Medir **errores y RPS en ventanas temporales**, latencia p95 solo de respuestas satisfactorias, recursos de JMeter, Ubuntu1, Ubuntu2, Ubuntu3 y métricas HAProxy.
 - Definir por anticipado capacidad aceptable (por ejemplo errores <1 % y p95 dentro de umbral) y punto de fallo grave (15–20 % de errores sostenidos); detener ante efectos severos sobre el clúster.
-- Después del ensayo de diez instancias, **restaurar y verificar las veinte**; evitar reinicios o limpiezas de caché que alteren la comparación.
+- **Completado:** después del ensayo de diez instancias, **se restauraron y verificaron las veinte**, sin reinicios ni limpiezas de caché; consultar [acta final](restauracion-final-20-2026-11-20.md).
 
 ## Texto para utilizar en el informe IEEE
 

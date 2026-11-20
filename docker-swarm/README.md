@@ -1,6 +1,6 @@
 # Docker Swarm — arquitectura final y material de reconstrucción
 
-**Estado definitivo:** las cinco API están en **4/4** con `max_replicas_per_node: 2`, dos tareas en Ubuntu1 y dos en Ubuntu2; HAProxy V4 tiene cuatro slots por backend. [Auditoría de 20 instancias](../pruebas/validacion-arquitectura-20-instancias.md).
+**Estado definitivo restaurado tras pruebas de estrés:** las cinco API están en **4/4** con `max_replicas_per_node: 2`, dos tareas en Ubuntu1 y dos en Ubuntu2; HAProxy V4 tiene cuatro slots por backend. [Auditoría de 20 instancias](../pruebas/validacion-arquitectura-20-instancias.md) y [acta de restauración](../pruebas/restauracion-final-20-2026-11-20.md).
 
 **Advertencia de versión:** el inventario JSON y la plantilla YAML inicial se obtuvieron antes de ampliar la arquitectura y se conservan como evidencia histórica, sin afirmar que sean exportaciones de la topología final. La plantilla actualizada refleja las réplicas finales, pero **no está probada para reinstalar todo el clúster**.
 
