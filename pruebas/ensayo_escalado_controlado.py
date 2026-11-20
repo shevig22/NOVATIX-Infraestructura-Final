@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Comparacion HTTP con 1 y 2 replicas de Equipos; restauracion en finally."""
+import argparse
 import json
 import platform
 import signal
@@ -104,7 +105,10 @@ def main():
     if platform.node() != "servidorUbuntu2":
         output("ERROR=SERVIDOR_INCORRECTO")
         return
-    benchmark_script = Path("/tmp/novatix_benchmark_controlado.py")
+    parser = argparse.ArgumentParser(description="NOVATIX: comparacion y restauracion de replicas")
+    parser.add_argument("--benchmark", required=True, help="Ruta a carga_segura.py")
+    args = parser.parse_args()
+    benchmark_script = Path(args.benchmark)
     if not benchmark_script.is_file() or not Path("/vagrant").is_dir():
         output("ERROR=BENCHMARK_O_VAGRANT_NO_DISPONIBLES")
         return
