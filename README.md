@@ -2,7 +2,7 @@
 
 Proyecto académico de **Redes e Infraestructura**: plataforma de microservicios y analítica distribuida implementada con **Docker Swarm, Node.js, MySQL, HAProxy y Apache Spark 3.5.9**.
 
-> **Estado del repositorio (19/11/2026):** inicio de la consolidación del despliegue final. Este README documenta el entorno que se verificó en las máquinas virtuales. **Todavía faltan subir aquí todos los archivos fuente y los scripts exactos del entorno**; no debe considerarse reproducible desde un único comando hasta completar esa consolidación.
+> **Estado del repositorio (19/11/2026):** inicio de la consolidación del despliegue final. Este README documenta el entorno que se verificó en las máquinas virtuales. **Spark V2, su runner y los diagramas ya están publicados; todavía faltan cargar las fuentes completas del dashboard y los scripts exactos del entorno**; no debe considerarse reproducible desde un único comando hasta completar esa consolidación.
 
 ## Arquitectura desplegada
 
@@ -49,8 +49,9 @@ Estas verificaciones **no sustituyen** una prueba de carga, latencia o recuperac
 
 ## Estructura de trabajo
 
-- `documentacion/`: arquitectura y estado de pruebas.
-- `spark/`: incorporar código PySpark V2, configuración y ejecución real.
+- `documentacion/`: arquitectura, estado de pruebas y registro de consolidación.
+- `diagramas/`: diagramas editables de despliegue y pipeline publicados.
+- `spark/`: código PySpark V2, runner y documentación publicados.
 - `dashboard/`: incorporar frontend, backend y Dockerfile realmente desplegados.
 - `infraestructura/`: incorporar Vagrant y provisión para los tres nodos.
 - `docker-swarm/`, `haproxy/`, `mysql/`, `microservicios/`: incorporar archivos fuente y de despliegue reales.
