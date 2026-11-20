@@ -32,7 +32,7 @@ El puerto 8093 se utilizó para pruebas y **no forma parte del diseño final**. 
 
 **Operación transaccional:** cliente → HAProxy → API de microservicio → MySQL del servicio en Ubuntu3 → respuesta.
 
-**Analítica Spark V2:** cinco archivos CSV sintéticos → Spark Master y dos Workers → reporte JSON → API Express del dashboard → gráficos y tablas. El análisis Spark es **por lotes**; el navegador no consulta las bases MySQL directamente. Tampoco se afirma que el reporte Spark sea una consulta SQL en tiempo real.
+**Analítica Spark V2:** cinco archivos CSV preparados a partir de una fuente futbolística abierta y ampliaciones simuladas → Spark Master y dos Workers → reporte JSON → API Express del dashboard → gráficos y tablas. El análisis Spark es **por lotes**; el navegador no consulta las bases MySQL directamente. Tampoco se afirma que el reporte Spark sea una consulta SQL en tiempo real.
 
 El Dashboard Spark V2 incluye once conjuntos de análisis y muestra tendencias mensuales, ligas, equipos, apuestas, movimientos y distribuciones. El reporte está en `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json` en el entorno Vagrant.
 
@@ -64,3 +64,9 @@ Estas verificaciones **no sustituyen** una prueba de carga, latencia o recuperac
 ## Entrega
 
 Proyecto final del módulo de Infraestructura. Fecha indicada en el enunciado: **20 de noviembre de 2026**. Entregables: informe IEEE (máximo 10 páginas), presentación de 15 minutos, código/configuración y README de reproducción.
+
+## Datos de origen y pruebas pendientes
+
+El equipo utilizó como punto de partida el dataset abierto [Football Data from Transfermarkt](https://www.kaggle.com/datasets/davidcariboo/player-scores) de Kaggle y generó datos complementarios; el mecanismo preciso de transformación sigue pendiente de publicar. Spark V2 lee CSV preparados, no consulta Kaggle ni MySQL en tiempo real. Consultar [procedencia](documentacion/procedencia-de-datos.md).
+
+La guía de [Swarm](docker-swarm/README.md), [Vagrant](infraestructura/README.md) y [MySQL](mysql/README.md) distingue lo verificado de los archivos de reconstrucción aún pendientes. [Plan de pruebas](pruebas/plan-rendimiento.md) preparado, sin afirmar métricas todavía.
