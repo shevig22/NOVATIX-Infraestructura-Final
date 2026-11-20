@@ -4,7 +4,7 @@
 
 | Componente | Ubuntu1 `192.168.100.2` | Ubuntu2 `192.168.100.3` | Ubuntu3 `192.168.100.4` |
 |---|---|---|---|
-| Cinco microservicios Node.js | Instancias A, una de cada API | Instancias B, una de cada API | — |
+| Cinco microservicios Node.js | Dos instancias por API (10 en total) | Dos instancias por API (10 en total) | — |
 | MySQL | — | — | Cinco servicios y volúmenes persistentes |
 | Docker Swarm | Worker | Manager (líder) | Worker |
 | HAProxy | — | Única instancia, balanceo HTTP | — |
@@ -49,6 +49,8 @@ Los prefijos antiguos `/usuarios/api/usuarios`, etc. también respondieron HTTP 
 
 Este documento describe el entorno ya auditado. Los archivos de despliegue precisos deben exportarse del clúster antes de publicarlos como instalación reproducible. No copiar sin adaptar el `Vagrantfile`, `docker-compose-novatix.yml` o `haproxy.cfg` de un repositorio que utiliza otras direcciones IP.
 
-## Aclaración sobre una meta posterior
+## Implementación definitiva validada
 
-El despliegue verificado tiene **10 réplicas Node.js** (una por servicio en cada uno de Ubuntu1 y Ubuntu2). El equipo indicó posteriormente un objetivo de **20 réplicas** (dos por servicio y por nodo), aún **no implementado**. Ver [arquitectura actual frente al nuevo objetivo](arquitectura-actual-vs-objetivo-20.md). Los diagramas e inventarios actuales no deben etiquetarse como un despliegue de 20.
+La auditoría final verificó **4/4 réplicas por API**, máximo dos por nodo, **diez en Ubuntu1 y diez en Ubuntu2**. Los cinco MySQL permanecen en Ubuntu3. HAProxy V4 dispone de cuatro backends UP por servicio y repartió 80 respuestas HTTP 200 20/20/20/20 en cada API. [Evidencia final](../pruebas/validacion-arquitectura-20-instancias.md).
+
+Persisten las limitaciones de tolerancia a fallos de Ubuntu2/Ubuntu3 y falta medir rendimiento bajo carga con cuatro réplicas.

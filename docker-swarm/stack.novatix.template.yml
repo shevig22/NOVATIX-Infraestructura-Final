@@ -1,5 +1,5 @@
 # NOVATIX — PLANTILLA DE RECONSTRUCCION; NO DESPLEGAR EN EL CLUSTER ACTIVO.
-# Elaborada desde inventario sanitizado de 17 servicios (20/11/2026).
+# Adaptada a 20 instancias de API verificadas (4 por servicio, maximo 2 por nodo).
 # Incluye los 11 servicios de novatix_stack, NO Spark ni dashboard independiente.
 # Requiere completar variables de entorno, validar nodos/volumenes y probar en entorno aislado.
 # NO EJECUTAR: docker stack deploy -c stack.novatix.template.yml novatix_stack
@@ -15,11 +15,11 @@ services:
     networks:
       - novatix_overlay
     deploy:
-      replicas: 2
+      replicas: 4
       placement:
         constraints:
           - "node.labels.novatix.role==aplicaciones"
-        max_replicas_per_node: 1
+        max_replicas_per_node: 2
       restart_policy:
         condition: any
   equipos:
@@ -32,11 +32,11 @@ services:
     networks:
       - novatix_overlay
     deploy:
-      replicas: 2
+      replicas: 4
       placement:
         constraints:
           - "node.labels.novatix.role==aplicaciones"
-        max_replicas_per_node: 1
+        max_replicas_per_node: 2
       restart_policy:
         condition: any
   partidos:
@@ -49,11 +49,11 @@ services:
     networks:
       - novatix_overlay
     deploy:
-      replicas: 2
+      replicas: 4
       placement:
         constraints:
           - "node.labels.novatix.role==aplicaciones"
-        max_replicas_per_node: 1
+        max_replicas_per_node: 2
       restart_policy:
         condition: any
   apuestas:
@@ -68,11 +68,11 @@ services:
     networks:
       - novatix_overlay
     deploy:
-      replicas: 2
+      replicas: 4
       placement:
         constraints:
           - "node.labels.novatix.role==aplicaciones"
-        max_replicas_per_node: 1
+        max_replicas_per_node: 2
       restart_policy:
         condition: any
   dinero:
@@ -85,11 +85,11 @@ services:
     networks:
       - novatix_overlay
     deploy:
-      replicas: 2
+      replicas: 4
       placement:
         constraints:
           - "node.labels.novatix.role==aplicaciones"
-        max_replicas_per_node: 1
+        max_replicas_per_node: 2
       restart_policy:
         condition: any
   db-usuarios:
@@ -165,7 +165,7 @@ services:
   haproxy:
     image: haproxy:2.8@sha256:9f811a0908e72b71ba5bcc727e3bc186fa46e0cde84c5808953c8a8971588ed7
     configs:
-      - source: haproxy_v2
+      - source: haproxy_v4
         target: /usr/local/etc/haproxy/haproxy.cfg
     networks:
       - novatix_overlay
@@ -188,8 +188,8 @@ networks:
     external: true
     name: novatix_stack_novatix_net_new
 configs:
-  haproxy_v2:
-    file: ../haproxy/haproxy.cfg
+  haproxy_v4:
+    file: ../haproxy/haproxy-4-replicas.candidate.cfg
 volumes:
   usuarios_data:
     external: true

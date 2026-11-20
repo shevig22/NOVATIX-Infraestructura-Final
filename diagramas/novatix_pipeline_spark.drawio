@@ -4,7 +4,7 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="swarm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;dashed=1;dashPattern=8 4;fillColor=none;strokeWidth=2;align=left;verticalAlign=top;spacingTop=12;spacingLeft=14;fontSize=16;fontStyle=1;" value="&lt;b&gt;Plataforma de microservicios&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Orquestación de contenedores con Docker Swarm&lt;/font&gt;" vertex="1">
+        <mxCell id="swarm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;dashed=1;dashPattern=8 4;fillColor=none;strokeWidth=2;align=left;verticalAlign=top;spacingTop=12;spacingLeft=14;fontSize=16;fontStyle=1;" value="&lt;b&gt;Plataforma de microservicios&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;Docker Swarm: 5 API × 4 réplicas = 20 instancias&lt;/font&gt;" vertex="1">
           <mxGeometry height="395" width="730" x="800" y="120" as="geometry" />
         </mxCell>
         <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontColor=#172B4D;" value="&lt;b&gt;NOVATIX&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot;&gt;Arquitectura general del sistema&lt;/font&gt;" vertex="1">

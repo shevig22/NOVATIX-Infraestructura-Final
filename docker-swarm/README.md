@@ -1,17 +1,21 @@
-# Docker Swarm — reconstrucción documentada desde el clúster real
+# Docker Swarm — arquitectura final y material de reconstrucción
+
+**Estado definitivo:** las cinco API están en **4/4** con `max_replicas_per_node: 2`, dos tareas en Ubuntu1 y dos en Ubuntu2; HAProxy V4 tiene cuatro slots por backend. [Auditoría de 20 instancias](../pruebas/validacion-arquitectura-20-instancias.md).
+
+**Advertencia de versión:** el inventario JSON y la plantilla YAML inicial se obtuvieron antes de ampliar la arquitectura y se conservan como evidencia histórica, sin afirmar que sean exportaciones de la topología final. La plantilla actualizada refleja las réplicas finales, pero **no está probada para reinstalar todo el clúster**.
 
 El archivo [inventario-activo-sanitizado.json](inventario-activo-sanitizado.json) procede de `docker service inspect` sobre **17 servicios** del clúster Ubuntu2 y está limitado a imágenes, réplicas, restricciones, puertos, redes, montajes y **nombres** de variables; no contiene sus valores.
 
-## Distribución observada
+## Distribución observada al exportar el inventario histórico
 
 - **11 servicios del stack transaccional**: cinco APIs `shevig2208` (2 réplicas cada una), cinco MySQL 8.0 (una réplica en Ubuntu3 cada uno) y HAProxy 2.8 (una réplica en Ubuntu2).
 - **6 servicios independientes**: dashboard (uno), Spark Master (uno), Workers (dos) y jobs batch V1/V2 (dos).
 - Los cinco microservicios usan `node.labels.novatix.role==aplicaciones` y `max_replicas_per_node: 1`, lo que permite ubicar uno en Ubuntu1 y otro en Ubuntu2 cuando los nodos están etiquetados.
 - El inventario proporciona un ID de red `klq9z33usype07g3s0tmj6ala`. De una inspección anterior del clúster se confirmó el nombre `novatix_stack_novatix_net_new` y la subred `10.77.0.0/24`; comprobar que el nombre siga apuntando a ese ID antes de utilizar la plantilla.
 - Las cinco bases usan los volúmenes reales `novatix_stack_db_{usuarios,equipos,partidos,apuestas,dinero}_data`, ubicados con los servicios en Ubuntu3; no hay failover automático de datos ante pérdida de ese nodo.
-- HAProxy publica 8080→80 y 8888→8888 en modo `host`; carga su configuración verificada desde `../haproxy/haproxy.cfg`.
+- HAProxy publica 8080→80 y 8888→8888 en modo `host`; carga su configuración V4 desde la Docker Config `novatix_stack_haproxy_cfg_4replicas_20261120`. La plantilla se ha ajustado para referirse al archivo V4.
 
-## Plantilla YAML: NO DESPLEGAR sobre el entorno activo
+## Plantilla YAML de topología final: NO DESPLEGAR sobre el entorno activo
 
 [`stack.novatix.template.yml`](stack.novatix.template.yml) incluye **solo los 11 servicios del stack transaccional** y refleja su imagen exacta (tag + digest), restricciones, puertos y volúmenes. Es una **plantilla informativa, no el manifiesto original ni una receta probada de instalación**. Algunos valores de conexión siguen como variables de entorno (ejemplo [`variables.example`](variables.example)). El inventario original no contiene `Command`, `Args`, valores secretos, certificados ni las definiciones/atributos completos de las redes.
 

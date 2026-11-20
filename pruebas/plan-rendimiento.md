@@ -32,3 +32,7 @@ La primera medición utiliza el script [`carga_segura.py`](carga_segura.py) sobr
 ## Comparación ejecutada (20/11/2026)
 
 Se registró en la consola [ensayo real 1 vs 2](resultados-escalabilidad-2026-11-20.md): 720/720 HTTP 200, restauración 2/2, throughput superior con dos réplicas en los tres escenarios. Esta medición **no valida** una topología con cuatro réplicas por microservicio ni un total de veinte instancias.
+
+## Arquitectura final implementada: pruebas por realizar
+
+Las **20 instancias** (cuatro réplicas por servicio, dos por nodo) se validaron operacionalmente el 20/11/2026. Consultar [evidencia final](validacion-arquitectura-20-instancias.md). Las métricas RPS previas describen **una y dos réplicas**, por lo que aún falta repetir carga sobre las cuatro del estado definitivo.
