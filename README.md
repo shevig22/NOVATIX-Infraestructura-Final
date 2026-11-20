@@ -54,7 +54,7 @@ El verificador no altera archivos ni bases de datos; comprueba esquema, SHA-256,
 - **Balanceo 4/4 por API:** 80 GET HTTP 200 por API, distribuidos 20/20/20/20.
 - **Estrés exploratorio JMeter, 10 vs 20 instancias:** 403,3 vs 550,2 RPS mostrados; 99 vs 64 ms de media. **Ambas corridas acumularon ~21 % de errores** de causa no determinada; no representan capacidad sostenible ni benchmark reproducido sin JTL.
 
-## Reproducibilidad: qué puede comprobar el profesor
+## Reproducibilidad
 
 La [guía paso a paso](documentacion/reproduccion-paso-a-paso.md) organiza nueve fases: preparar el laboratorio, crear las VM, configurar Swarm, MySQL y las API, ejecutar Spark/dashboard, publicar el frontend Apache, verificar la futura API paginada, integrar visualmente Spark y registrar las evidencias. Incluye una matriz de verificación que distingue **código publicado, pruebas reales y procedimientos todavía manuales o no validados**. Es una **guía técnica parcial**, no un instalador automático certificado.
 
