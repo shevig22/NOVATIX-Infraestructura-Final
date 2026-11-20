@@ -10,7 +10,7 @@ Proyecto académico de microservicios para apuestas deportivas **simuladas**, de
 | Verificar los CSV de Spark | [Datos de entrada](datos/README.md), [manifiesto](datos/manifest-csv-v2.json) y [validador](datos/verificar_csv.py) |
 | Ejecutar la analítica | [PySpark V2](spark/README.md), [script](spark/analisis_novatix_v2.py) |
 | Entender el dashboard | [Dashboard Docker/Node.js](dashboard/README.md) |
-| Reconstruir en laboratorio NUEVO | [Guía orientativa con dependencias pendientes](documentacion/reproduccion-paso-a-paso.md) |
+| Reproducir NOVATIX paso a paso (requisito académico) | [**Guía de reproducción actualizada: 3 Ubuntu, Swarm, MySQL, Spark, frontend y pruebas**](documentacion/reproduccion-paso-a-paso.md) |
 | Evaluar qué es reproducible y qué falta | [**Auditoría profunda del repositorio**](documentacion/auditoria-reproducibilidad-2026-11-20.md) |
 | Ver integración reciente (frontend, paginación, Spark) | [Avances del 20/11/2026 — estados y pendientes](documentacion/avances-frontend-spark-paginacion-2026-11-20.md) |
 | Consultar pruebas | [1 vs 2 réplicas](pruebas/resultados-escalabilidad-2026-11-20.md), [10 vs 20 en JMeter](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md), [restauración final](pruebas/restauracion-final-20-2026-11-20.md) |
@@ -54,12 +54,19 @@ El verificador no altera archivos ni bases de datos; comprueba esquema, SHA-256,
 - **Balanceo 4/4 por API:** 80 GET HTTP 200 por API, distribuidos 20/20/20/20.
 - **Estrés exploratorio JMeter, 10 vs 20 instancias:** 403,3 vs 550,2 RPS mostrados; 99 vs 64 ms de media. **Ambas corridas acumularon ~21 % de errores** de causa no determinada; no representan capacidad sostenible ni benchmark reproducido sin JTL.
 
+## Reproducibilidad: qué puede comprobar el profesor
+
+La [guía paso a paso](documentacion/reproduccion-paso-a-paso.md) organiza nueve fases: preparar el laboratorio, crear las VM, configurar Swarm, MySQL y las API, ejecutar Spark/dashboard, publicar el frontend Apache, verificar la futura API paginada, integrar visualmente Spark y registrar las evidencias. Incluye una matriz de verificación que distingue **código publicado, pruebas reales y procedimientos todavía manuales o no validados**. Es una **guía técnica parcial**, no un instalador automático certificado.
+
+**Estado al 20/11/2026:** los cambios de paginación están confirmados en un **commit local de Ubuntu2** (`a2dbe75`) pero el envío a GitHub devolvió HTTP 403; por tanto, no se consideran incluidos en esta rama remota. El frontend servido desde `/var/www/html2` en Ubuntu1, junto a los archivos adaptados del dashboard Spark y la configuración Apache, tampoco se ha sincronizado como fuente. El dashboard embebido usa un control de rol de cliente que **no equivale a autorización segura del servidor**. Se documentó sin presentar estas funciones como completamente reproducibles o seguras.
+
 ## Limitaciones para reproducir la infraestructura completa
 
 1. `infraestructura/Vagrantfile` crea las VM, pero **no instala automáticamente** Swarm, Spark, volúmenes y servicios.
 2. `docker-swarm/stack.novatix.template.yml` está **sin validar para instalación limpia**; no ejecutarla sobre el laboratorio actual. Faltan secretos/usuarios, importación MySQL probada y despliegue integral de Spark/dashboard.
 3. Los cinco CSV permiten verificar los análisis por lotes, **pero no contienen las columnas de usuarios necesarias para poblar directamente la base transaccional**, ni el generador original de cuotas.
 4. `dashboard/Dockerfile` portable y su prueba aislada se publicaron, **sin evidencia aún de construcción o despliegue de esa nueva imagen**. El servicio original de dashboard sigue activo en 8090.
-5. La implementación académica conserva contraseñas sin hash y valores predeterminados inseguros: **no desplegar fuera de una red de laboratorio ni exponer por Internet**.
+5. El frontend transaccional de Apache y los ajustes de integración de Spark siguen pendientes de publicación saneada; la paginación del backend está local pero no desplegada en Swarm ni sincronizada con el remoto.
+6. La implementación académica conserva contraseñas sin hash y valores predeterminados inseguros: **no desplegar fuera de una red de laboratorio ni exponer por Internet**.
 
 La lista priorizada de riesgos, archivos a mantener, pruebas verificadas y pendientes está en la [auditoría técnica](documentacion/auditoria-reproducibilidad-2026-11-20.md). No se reiniciaron ni modificaron servidores para organizar GitHub.
