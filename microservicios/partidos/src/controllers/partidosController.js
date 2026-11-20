@@ -36,11 +36,33 @@ async function obtenerEquipoEspecifico(id_equipo) {
 
 router.get('/api/partidos', async (req, res) => {
   try {
-    const partidos = await partidosModel.obtenerPartidos();
-    res.status(200).json(partidos);
+    if (req.query.page === undefined &&
+        req.query.limit === undefined) {
+      return res.json(await partidosModel.obtenerPartidos());
+    }
+
+    const page = Number(req.query.page === undefined ? 1 : req.query.page);
+    const limit = Number(req.query.limit === undefined ? 20 : req.query.limit);
+
+    if (!Number.isSafeInteger(page) || page < 1 ||
+        !Number.isSafeInteger(limit) || limit < 1 || limit > 100 ||
+        !Number.isSafeInteger((page - 1) * limit)) {
+      return res.status(400).json({ error: 'Paginacion invalida' });
+    }
+
+    const filas = await partidosModel.obtenerPartidosPaginados(
+      limit + 1, (page - 1) * limit
+    );
+
+    return res.json({
+      items: filas.slice(0, limit),
+      page,
+      limit,
+      hasMore: filas.length > limit
+    });
   } catch (error) {
-    console.error("Error al obtener partidos:", error);
-    res.status(500).json({ error: "Error del servidor al obtener los partidos" });
+    console.error('Error al consultar partidos:', error);
+    res.status(500).json({ error: 'Error consultando partidos' });
   }
 });
 

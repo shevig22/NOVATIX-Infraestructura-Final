@@ -7,9 +7,17 @@ const connection = mysql.createPool({ enableKeepAlive: true, keepAliveInitialDel
     database: process.env.DB_NAME || 'partidos_db' 
 }); 
  
-async function obtenerPartidos() { 
-    const result = await connection.query('SELECT * FROM partidos'); 
-    return result[0]; 
+async function obtenerPartidos() {
+    const [filas] = await connection.query('SELECT * FROM partidos');
+    return filas;
+}
+
+async function obtenerPartidosPaginados(limit, offset) {
+    const [filas] = await connection.query(
+        'SELECT * FROM partidos ORDER BY id DESC LIMIT ? OFFSET ?',
+        [limit, offset]
+    );
+    return filas;
 } 
 
 async function obtenerPartidoPorId(id) {
@@ -44,7 +52,8 @@ async function eliminarPartido(id) {
     return result;
 }
 
-module.exports = { 
+module.exports = {
+    obtenerPartidosPaginados,
     obtenerPartidos, 
     obtenerPartidoPorId,
     crearPartido,

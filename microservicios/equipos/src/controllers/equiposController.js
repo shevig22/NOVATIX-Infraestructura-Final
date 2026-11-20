@@ -4,11 +4,36 @@ const equiposModel = require('../models/equiposModel');
  
 router.get('/api/equipos', async (req, res) => {
   try {
-    const equipos = await equiposModel.obtenerEquipos();
-    res.status(200).json(equipos);
+    if (req.query.page === undefined &&
+        req.query.limit === undefined &&
+        req.query.q === undefined) {
+      return res.json(await equiposModel.obtenerEquipos());
+    }
+
+    const page = Number(req.query.page === undefined ? 1 : req.query.page);
+    const limit = Number(req.query.limit === undefined ? 20 : req.query.limit);
+    const q = String(req.query.q === undefined ? '' : req.query.q).trim();
+
+    if (!Number.isSafeInteger(page) || page < 1 ||
+        !Number.isSafeInteger(limit) || limit < 1 || limit > 100 ||
+        !Number.isSafeInteger((page - 1) * limit) ||
+        q.length > 80) {
+      return res.status(400).json({ error: 'Consulta invalida' });
+    }
+
+    const filas = await equiposModel.obtenerEquiposPaginados(
+      limit + 1, (page - 1) * limit, q
+    );
+
+    return res.json({
+      items: filas.slice(0, limit),
+      page,
+      limit,
+      hasMore: filas.length > limit
+    });
   } catch (error) {
-    console.error("Error al obtener equipos:", error);
-    res.status(500).json({ error: "Error del servidor al obtener los equipos" });
+    console.error('Error al consultar equipos:', error);
+    res.status(500).json({ error: 'Error consultando equipos' });
   }
 });
 

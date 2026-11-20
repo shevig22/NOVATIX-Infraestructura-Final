@@ -7,9 +7,22 @@ const connection = mysql.createPool({ enableKeepAlive: true, keepAliveInitialDel
     database: process.env.DB_NAME || 'equipos_db' 
 }); 
  
-async function obtenerEquipos() { 
-    const result = await connection.query('SELECT * FROM equipos'); 
-    return result[0]; 
+async function obtenerEquipos() {
+    const [filas] = await connection.query('SELECT * FROM equipos');
+    return filas;
+}
+
+async function obtenerEquiposPaginados(limit, offset, q) {
+    const sql = q
+        ? 'SELECT * FROM equipos WHERE nombre LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?'
+        : 'SELECT * FROM equipos ORDER BY id DESC LIMIT ? OFFSET ?';
+
+    const parametros = q
+        ? [q + '%', limit, offset]
+        : [limit, offset];
+
+    const [filas] = await connection.query(sql, parametros);
+    return filas;
 } 
 
 async function obtenerEquipoPorId(id) {
@@ -41,7 +54,8 @@ async function eliminarEquipo(id) {
     return result;
 }
 
-module.exports = { 
+module.exports = {
+    obtenerEquiposPaginados,
     obtenerEquipos, 
     obtenerEquipoPorId,
     crearEquipo,
