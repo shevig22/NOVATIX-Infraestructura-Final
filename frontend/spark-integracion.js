@@ -1,3 +1,4 @@
+
 function abrirSparkNovatix() {
     if (!usuarioActual || usuarioActual.rol !== "admin") {
         alert("Esta opción es exclusiva para administradores.");
