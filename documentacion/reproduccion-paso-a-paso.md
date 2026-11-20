@@ -108,7 +108,17 @@ sudo cp frontend/index.html frontend/app.js frontend/estilos.css \
 sudo apache2ctl configtest
 ```
 
-**Fase de configuración manual pendiente:** definir en Apache un VirtualHost que sirva `DocumentRoot /var/www/html2` y enrute `/usuarios`, `/partidos`, `/equipos`, `/apuestas` y `/dinero` al frontend HAProxy de Ubuntu2 en `192.168.100.3:8080`. El **VirtualHost completo del servidor original no fue aportado** y no debe presentarse como reproducido. Verificar el mapa real de rutas en [HAProxy](../haproxy/README-4-replicas.md) antes de configurar los `ProxyPass`.
+**Fase de configuración pendiente de validación:** existe un [VirtualHost MODELO para laboratorio nuevo](../frontend/apache/novatix-laboratorio.conf) basado en el mapa HAProxy V4. **No se extrajo del Apache original ni fue probado en instalación limpia**. Las rutas `/usuarios`, `/partidos`, `/equipos`, `/apuestas` y `/dinero` deben pasar a `192.168.100.3:8080`, conservando su prefijo, porque HAProxy lo reescribe antes de llegar a cada API.
+
+En un entorno **nuevo y aislado**, luego de revisar el archivo MODELO y adaptar `ServerName`, IP y permisos, habilitarlo:
+
+```bash
+sudo cp frontend/apache/novatix-laboratorio.conf /etc/apache2/sites-available/novatix-laboratorio.conf
+sudo a2ensite novatix-laboratorio
+sudo apache2ctl configtest
+```
+
+**Solo si** devuelve `Syntax OK`, y después de verificar que el VirtualHost correcto prevalece sobre el sitio por defecto, recargar Apache con `sudo systemctl reload apache2`. Si el sitio por defecto interfiere, revisar `apache2ctl -S`; no deshabilitar sitios sin comprobar los requisitos de esa VM.
 
 En Ubuntu1 se implementó una optimización de emergencia: el botón **«Ver primeros 20 partidos»** solicita `?page=1&limit=20` y limita a 20 tarjetas la representación. **La API original desplegada todavía puede descargar todos los registros**, porque el backend paginado nuevo no está desplegado. El formulario administrativo de equipos también puede consultar el listado completo bajo demanda.
 
@@ -190,12 +200,12 @@ Realizar la prueba de balanceo de cuatro réplicas por servicio y registrar las 
 | Swarm / HAProxy | Plantilla + archivo candidato | **No demostrado de extremo a extremo** | servicios 4/4, MySQL 1/1, balanceo entre nodos |
 | Datos / Spark V2 | Cinco CSV + script + manifiesto | **Sí para verificación de CSV; parcial para Spark distribuido** | verificador sin errores; job Complete; 11 secciones del JSON |
 | Dashboard Spark independiente | Código y Dockerfile del servicio | **Parcial**: empaquetado disponible, no validado en instalación nueva | contenedor de pruebas, `/api/health`, indicadores visibles |
-| Frontend NOVATIX | **7 fuentes originales publicadas** en `frontend/` | **Parcial**: falta VirtualHost de cinco API y prueba integral | Apache, login y consulta funcional |
+| Frontend NOVATIX | **7 fuentes originales y VirtualHost MODELO publicados** | **Parcial**: el modelo de Apache aún no está probado en VM nueva | Apache, login y consulta funcional |
 | Integración Spark en frontend | **Fuentes adaptadas y proxy de ejemplo publicados** | **Parcial**: requiere Apache + servicio Spark y autorización | panel abre dashboard, proxy retorna datos, autorización validada |
 | API paginada nueva | **Commit solo local en Ubuntu2 al 20/11/2026** | **No desde `main` remoto todavía** | fuentes publicadas, MySQL real, pruebas de páginas |
 | Rendimiento JMeter | Tablas/resúmenes | **No completamente**: faltan planes y resultados crudos | JMX, JTL, mismo escenario, tasa de error documentada |
 
-**Faltantes principales:** generación histórica y transformación exacta de Kaggle, carga transaccional de MySQL, automatización de Swarm/Spark/volúmenes, credenciales seguras, VirtualHost transaccional completo y autorización del dashboard, publicación del commit de paginación, pruebas de navegador y repetición de JMeter con JMX/JTL.
+**Faltantes principales:** validación del VirtualHost modelo y reconstrucción de la aplicación, generación histórica y transformación exacta de Kaggle, carga transaccional de MySQL, automatización de Swarm/Spark/volúmenes, credenciales seguras, VirtualHost transaccional completo y autorización del dashboard, publicación del commit de paginación, pruebas de navegador y repetición de JMeter con JMX/JTL.
 
 **Conclusión:** esta guía permite seguir la arquitectura por etapas y verificar los componentes que cuentan con materiales. **No certifica una instalación integral desde cero.** Para cumplir un requisito estricto de reproducción total, el equipo debe completar y probar las etapas marcadas «No» antes de afirmar que cualquier tercero puede instalar NOVATIX usando únicamente este repositorio.
 
