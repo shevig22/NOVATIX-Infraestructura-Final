@@ -1,6 +1,6 @@
-# Plan de pruebas de rendimiento y balanceo — pendiente de ejecutar
+# Plan de pruebas de rendimiento y balanceo — primera medición registrada
 
-**Estado:** plan preparado, sin métricas inventadas. No ejecutar hasta que el clúster esté estable y exista evidencia de recuperación/backups.
+**Estado:** primera prueba HTTP GET de 360 solicitudes con dos réplicas reportada por el equipo; falta comprobar archivo JSON y continuar las pruebas de escalabilidad y resistencia. Ver [resultados](resultados-carga-2026-11-20.md).
 
 ## Línea base
 

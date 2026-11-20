@@ -74,3 +74,7 @@ La guía de [Swarm](docker-swarm/README.md), [Vagrant](infraestructura/README.md
 ## Resultados Spark y carga HTTP
 
 Ver [resultados analíticos verificados](documentacion/resultados-spark-v2.md) y [probador de carga HTTP de solo lectura](pruebas/README-carga.md). El paquete CSV completo se conservó y verificó por SHA-256, pero su publicación binaria en GitHub sigue pendiente.
+
+### Primeros resultados de carga (20/11/2026)
+
+La primera prueba GET en `/api/equipos/1` reportó **360/360 HTTP 200, cero errores** y reparto exacto **180/180** entre dos réplicas. Se midieron **152,86; 379,70 y 594,33 RPS** para concurrencias **1, 10 y 25** respectivamente. [Tabla completa y advertencias](pruebas/resultados-carga-2026-11-20.md). Estos datos son una primera medición; todavía no equivalen a comparar el rendimiento con una o dos réplicas, y falta adjuntar el JSON bruto.

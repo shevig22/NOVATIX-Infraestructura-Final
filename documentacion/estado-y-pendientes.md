@@ -10,7 +10,7 @@
 | Spark V2 | Job `Complete`, 11/11 análisis, 2 ejecutores observados | Verificado |
 | Dashboard V2 8090 | Servicio 1/1; rutas verificadas | Verificado |
 | Retiro de dashboard duplicado 8093 | La auditoría final muestra únicamente `novatix_dashboard` | Verificado |
-| Carga, latencia, escalabilidad y estrés | No hay mediciones comparativas reproducibles registradas aquí | Pendiente |
+| Carga y latencia inicial | Primera prueba GET de equipos: 360/360 HTTP 200, 50/50 entre réplicas; RPS 152,86–594,33; p95 8,50–95,77 ms; datos de salida suministrados por el equipo, JSON pendiente de adjuntar | Parcial, evidencia textual |\n| Escalabilidad 1 vs 2 y estrés | Aún no medidos | Pendiente |
 | Reinicio y persistencia de red | No se realizó prueba final tras reinicio | Pendiente |
 | Informe IEEE y presentación | Entregables requeridos por profesor | Pendiente |
 | Reproducibilidad desde GitHub | Código de cinco APIs, Spark V2, dashboard, HAProxy y diagramas; Vagrantfile publicado, inventario Swarm y plantilla no validada, cinco esquemas MySQL vacíos; siguen pendientes instalación limpia y datos de prueba | Parcial |
@@ -34,5 +34,5 @@ No fabricar métricas de desempeño que todavía no se hayan medido. Explicar qu
 1. Vagrantfile efectivo publicado. Recuperar los scripts de instalación del software por nodo.
 2. Inventario sanitizado de 17 servicios publicado; validar el manifiesto de Docker Swarm en entorno aislado.
 3. Cinco esquemas MySQL publicados; recuperar o regenerar datos de ejemplo sin datos sensibles.
-4. Añadir evidencias reproducibles de carga, latencia y escalabilidad.
+4. Publicar JSON bruto de carga y realizar comparaciones de réplicas/estrés sin interrumpir el clúster.
 5. Finalizar informe IEEE, presentación y guía paso a paso.
