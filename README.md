@@ -104,3 +104,7 @@ Las pruebas históricas de rendimiento [1 vs 2 réplicas](pruebas/resultados-esc
 ## Dashboard empaquetado como contenedor portable
 
 El dashboard ya opera como `novatix_dashboard` (Docker Swarm), en Ubuntu2, puerto **8090 externo → 8080 interno**. Spark genera el JSON en `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json`; el contenedor lo ve como `/resultados/reporte_novatix_v2.json` gracias a un bind `:ro`. Ahora existe un `dashboard/Dockerfile` portable basado en `node:22-alpine` y una [prueba de empaquetado aislada](dashboard/README.md). **La versión activa no fue reemplazada**.
+
+## ¿Dónde están los CSV y para qué sirve el manifiesto?
+
+Los cinco CSV de entrada Spark son `usuarios.csv`, `equipos.csv`, `partidos.csv`, `apuestas.csv` y `dinero.csv` (130.324 registros en conjunto). **Los CSV todavía están pendientes de subir a GitHub**, aunque sus copias preparadas han sido verificadas en el laboratorio. La carpeta [datos/](datos/README.md) explica con una tabla qué contiene cada uno, cómo subir la versión sin credenciales y por qué `manifest-csv-v2.json` es solo un **inventario con columnas, recuentos y hashes SHA-256**, no el contenido de los CSV.

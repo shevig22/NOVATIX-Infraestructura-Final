@@ -1,4 +1,52 @@
-# Datos de entrada Spark V2 — inventario comprobado
+# Datos de NOVATIX para Apache Spark
+
+## ¿Qué hay en esta carpeta?
+
+En NOVATIX trabajamos con **cinco archivos CSV**, que contienen las filas utilizadas por Apache Spark para producir el dashboard:
+
+| Archivo | Registros | Contenido |
+|---|---:|---|
+| `usuarios.csv` | 500 | Fecha de registro, estado y rol (copia depurada) |
+| `equipos.csv` | 3.277 | Equipos y ligas del fútbol |
+| `partidos.csv` | 88.958 | Partidos reales adaptados y cuotas simuladas |
+| `apuestas.csv` | 14.770 | Apuestas simuladas |
+| `dinero.csv` | 22.819 | Movimientos monetarios simulados |
+| **Total** | **130.324** | |
+
+**Estado al 20/11/2026:** los cinco CSV fueron comprobados en el entorno y existe un paquete depurado listo para subir, pero **todavía no están publicados en esta carpeta del repositorio**.
+
+### ¿Qué es `manifest-csv-v2.json`?
+
+Es la **ficha de control** de los CSV, no contiene los datos mismos. Por cada archivo indica:
+- Nombre, cantidad de filas y nombres de columnas.
+- Hash **SHA-256**, que funciona como huella digital del archivo y permite verificar que los datos no fueron cambiados.
+
+**V2** significa «versión 2» de nuestro pipeline de Spark, no un formato especial. Los archivos CSV son las **entradas**; el archivo JSON que genera Spark es la **salida**.
+
+### Subir los cinco CSV
+
+1. Abrir [la carpeta datos del repositorio](https://github.com/shevig22/NOVATIX-Infraestructura-Final/tree/main/datos).
+2. Seleccionar **Add file → Upload files**.
+3. Subir **los cinco CSV individuales** de la copia preparada para Spark (no el ZIP comprimido).
+4. Confirmar la carga en `main` y revisar que los nombres coincidan con esta tabla.
+5. Verificar que `usuarios.csv` tenga solo las columnas `id,fecha_registro,estado,rol`, nunca `nombre,email,usuario,password`.
+
+Se recomienda conservar el manifiesto sin modificar: los archivos preparados fueron verificados con los SHA-256 que ya contiene.
+
+### Dónde están en el laboratorio
+
+- CSV de entrada: `/vagrant/novatix_spark_datos/`.
+- JSON generado por Spark: `/vagrant/novatix_spark_resultados/reporte_novatix_v2.json`.
+- Programa que procesa los CSV: `spark/analisis_novatix_v2.py`.
+
+Los datos de Apuestas, Usuarios y Dinero son **simulados**. La fuente de partidos/equipos se adaptó desde [Kaggle/Transfermarkt](https://www.kaggle.com/datasets/davidcariboo/player-scores). Los CSV permiten repetir el análisis, pero reconstruir exactamente la simulación desde cero requiere recuperar los scripts históricos.
+
+> **Privacidad:** el `usuarios.csv` original incluye nombres, correos y contraseñas. No publicarlo. Subir únicamente la versión depurada del paquete para Spark. Las rutas de escudos, identificadores y permisos de reutilización deben revisarse antes de otra difusión pública.
+
+---
+
+## Detalle técnico y trazabilidad anteriores
+
 
 Esta carpeta documenta los **cinco archivos CSV que Spark V2 procesó realmente**. El manifiesto `manifest-csv-v2.json` contiene los nombres de columnas, las filas y los hashes SHA-256 emitidos por la inspección de solo lectura en `servidorUbuntu2`.
 
