@@ -14,7 +14,7 @@ La copia original fue obtenida del servidor `servidorUbuntu1` el 20/11/2026, des
 | `spark-dashboard-app.js` | Carga agregados desde `/novatix-spark-api/v2` | `ee018340f4faffae36709904b0258d05d7e36354c87db0d0238372c9e8ae6c8f` |
 | `spark-dashboard-styles.css` | Diseño del dashboard integrado | `a533e9d3fab28054d02f421323a39daba5883cdfbe7bde9096db07dc84c8f618` |
 
-**Estado de publicación:** el archivo `spark-integracion.js` fue publicado inicialmente. Los demás originales deben contrastarse con el material recibido antes de darlos por publicados. Los SHA-256 facilitan comprobar que no se sustituyan por archivos inventados.
+**Estado de publicación: COMPLETO para el respaldo recibido de Ubuntu1.** Los siete archivos se publicaron por separado en esta carpeta y sus SHA de objeto Git coincidieron **uno por uno** con las huellas Git calculadas sobre los bytes originales del respaldo. Los SHA-256 de la tabla permiten repetir la verificación con `python3 pruebas/comprobar-entrega.py`. Esto confirma igualdad de los archivos, **no** significa que se haya realizado una instalación limpia ni que la seguridad esté corregida.
 
 ## Implementación observada
 
@@ -25,7 +25,7 @@ La copia original fue obtenida del servidor `servidorUbuntu1` el 20/11/2026, des
 
 ## Reproducción segura en una máquina de laboratorio nueva
 
-1. Obtener los siete archivos originales y verificar sus huellas SHA-256.
+1. Clonar el repositorio; los siete archivos se encuentran directamente en `frontend/`. Ejecutar `python3 pruebas/comprobar-entrega.py` para verificar sus huellas SHA-256.
 2. Instalar Apache y habilitar las rutas API hacia HAProxy, sin copiar valores secretos ni exponer MySQL.
 3. Publicar los archivos en el DocumentRoot de la nueva VM y adaptar el VirtualHost a su red.
 4. Configurar `mod_proxy` y `mod_proxy_http` para el endpoint Spark; comprobar `apache2ctl configtest` antes de recargar.
@@ -35,3 +35,6 @@ La copia original fue obtenida del servidor `servidorUbuntu1` el 20/11/2026, des
 **Advertencia:** el código original solo comprueba `usuarioActual.rol` en JavaScript. Esta validación de cliente no constituye control de acceso seguro. El backend original tampoco debe exponerse en Internet sin resolver sus problemas de credenciales y permisos.
 
 Ver la [guía de reproducción general](../documentacion/reproduccion-paso-a-paso.md).
+## Configuración de Apache
+
+Se incluye [un ejemplo de `ProxyPass` para Spark](apache/novatix-spark-proxy.conf), adaptado de la fase S2. Todavía **no se ha publicado el VirtualHost transaccional real completo** (rutas relativas `/usuarios`, `/partidos`, `/equipos`, `/apuestas`, `/dinero`). Por tanto, es necesario configurar y comprobar ese enrutamiento hacia HAProxy en el laboratorio nuevo antes de probar el frontend. La guía [paso a paso](../documentacion/reproduccion-paso-a-paso.md) describe el procedimiento y sus límites.
