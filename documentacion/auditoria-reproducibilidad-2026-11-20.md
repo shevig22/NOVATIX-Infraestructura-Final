@@ -2,6 +2,12 @@
 
 **Repositorio:** [shevig22/NOVATIX-Infraestructura-Final](https://github.com/shevig22/NOVATIX-Infraestructura-Final). **Método:** inventario recursivo de `main`, lectura de código, manifiestos, esquemas, pruebas y documentación; comparación de los objetos Git de los cinco CSV subidos con copias originales disponibles en el entorno de trabajo y sus SHA-256; examen de relaciones de los CSV mediante Python. **No** se hizo un `vagrant up`, `docker stack deploy`, prueba de carga en vivo o `spark-submit` con un clúster nuevo.
 
+## Actualización posterior a esta auditoría (20/11/2026)
+
+**Se conservan los hallazgos históricos siguientes para trazabilidad.** Tras la auditoría se recibió un respaldo de siete archivos del frontend de `servidorUbuntu1` y se publicaron íntegramente en [`frontend/`](../frontend/README.md). Los SHA de objeto Git del repositorio coinciden uno a uno con los de la copia aportada y el script [`pruebas/comprobar-entrega.py`](../pruebas/comprobar-entrega.py) incorpora sus SHA-256. Además se publicó una configuración de **ejemplo** del proxy Spark y un **VirtualHost MODELO** para laboratorio nuevo, todavía sin ensayar en instalación limpia. Por tanto, el estado «sin frontend publicado» descrito más abajo ya **no** refleja el estado actual del repositorio.
+
+**Sigue pendiente:** la fuente de paginación de Partidos y Equipos está en un commit local de Ubuntu2 (`a2dbe75`) que no se pudo subir por HTTPS (403). Se generó un parche de 43 KB, pero **no está adjunto en esta conversación**. Esas modificaciones no aparecen todavía en `main`. Persisten las limitaciones de seguridad, datos MySQL e instalación Swarm/Spark integral sin validar. No se desplegó ni se modificó ningún servicio al publicar estos archivos.
+
 ## Dictamen
 
 | Alcance | Estado | Evidencia o impedimento |
