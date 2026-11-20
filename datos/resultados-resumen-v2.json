@@ -1,0 +1,79 @@
+{
+  "sistema": "NOVATIX",
+  "reporte": "spark-v2",
+  "fecha_ejecucion_utc": "2026-11-19T23:23:43.714586+00:00",
+  "motor": "Apache Spark 3.5.9",
+  "ejecutores_observados": 2,
+  "distribucion_observada": true,
+  "filas": {
+    "usuarios": 500,
+    "equipos": 3277,
+    "partidos": 88958,
+    "apuestas": 14770,
+    "movimientos_dinero": 22819,
+    "total": 130324
+  },
+  "partidos": {
+    "finalizados": 88958,
+    "local": {
+      "cantidad": 40081,
+      "porcentaje": 45.06
+    },
+    "visitante": {
+      "cantidad": 29575,
+      "porcentaje": 33.25
+    },
+    "empate": {
+      "cantidad": 19302,
+      "porcentaje": 21.7
+    }
+  },
+  "apuestas_simuladas": {
+    "total": 14770,
+    "ganadas": 5986,
+    "ganadas_pct": 40.53,
+    "perdidas": 8784,
+    "perdidas_pct": 59.47,
+    "valor_apostado": 20294639.57,
+    "pago_teorico": 21655233.46,
+    "moneda": "no determinada; unidades monetarias simuladas"
+  },
+  "nota_seleccion_empate": {
+    "equipo_id": 0,
+    "apuestas": 5556,
+    "porcentaje_apuestas": 37.62,
+    "validacion": "La cuota de cada apuesta coincide con cuota_empate de su partido, y el resultado coincide con los goles; no son equipos perdidos.",
+    "advertencia_dashboard": "La agrupación top_equipos contiene un grupo null por la unión con equipos; debe etiquetarse Empate. La corrección no se ha aplicado a la ejecución Spark."
+  },
+  "liga_mayor_volumen_partidos_en_top40": {
+    "pais": "Internacional",
+    "liga": "INT",
+    "partidos": 12040,
+    "promedio_goles": 3.58
+  },
+  "dataset_origen_declarado_por_equipo": "https://www.kaggle.com/datasets/davidcariboo/player-scores",
+  "licencia_obra_fuente": "CC0 (según metadatos del proyecto original)",
+  "csv_analizados": [
+    {
+      "nombre": "usuarios.csv",
+      "sha256": "7361d528bc36ab79cedc73907a498979fb9635946c18cd8f9a1c7b2033bf0432"
+    },
+    {
+      "nombre": "equipos.csv",
+      "sha256": "8299902074663ce376951b39a9aa481ae861f0faad1e04f2d6a073725be22b6e"
+    },
+    {
+      "nombre": "partidos.csv",
+      "sha256": "fa541b4d9df8ea888f154af441c8447191193c1f90d8b4669eee418d05dd6673"
+    },
+    {
+      "nombre": "apuestas.csv",
+      "sha256": "b5830923d2cb4d69b3d8e1c05a2c9bc455f781a1d7451f873b223a60c930b0f2"
+    },
+    {
+      "nombre": "dinero.csv",
+      "sha256": "82c25c75c4e5f17aa4025d7571ae7f793927c96943ac56201222f5695523424a"
+    }
+  ],
+  "paquete_comprimido_sha256": "cd7856d351e74c87cf6510e4a24b03db5dec3c00d5a2775c2b50a6af14c5687c"
+}

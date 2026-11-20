@@ -31,3 +31,7 @@ Para reconstruir el dataset aún debe publicarse alguno de estos mecanismos:
 5. Solo cuando proceda según la licencia, archivos de entrada/salida sin credenciales ni datos personales.
 
 No inventar una transformación histórica que todavía no se haya podido recuperar.
+
+## Verificación adicional del archivo íntegro
+
+La revisión del paquete de seis archivos `novatix_datos_spark_v2_20261120_025952.tar.gz` confirmó los cinco hashes y el reporte Spark V2; el dataset de origen declara licencia CC0 en su repositorio oficial. Se documentaron resultados y aclaración del marcador de empates en [resultados Spark V2](resultados-spark-v2.md). La transformación original desde Kaggle sigue sin código reproducible; los datos ya preparados permiten repetir la analítica si se incorporan al repositorio.

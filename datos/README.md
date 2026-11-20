@@ -37,3 +37,7 @@ Comparar con los valores en `manifest-csv-v2.json`. El reporte JSON generado se 
 
 Las tablas MySQL `apuestas` y `dinero` manejan la columna `fecha`, mientras que Spark necesita `fecha_apuesta` y `fecha_transaccion` en CSV: la normalización fue parte de la preparación, pero su implementación histórica aún no ha sido recuperada.
 
+
+## Paquete completo verificado
+
+Se revisó el contenido del archivo `novatix_datos_spark_v2_20261120_025952.tar.gz` (3.718.237 bytes, SHA-256 `cd7856d351e74c87cf6510e4a24b03db5dec3c00d5a2775c2b50a6af14c5687c`). Contiene los cinco CSV y el reporte JSON V2. Los cinco hashes de CSV coinciden con el manifiesto. La fuente pública Transfermarkt declara CC0 en sus metadatos. La revisión encontró datos futbolísticos y datos transaccionales simulados, sin columnas directas de contraseñas, emails o documentos. La publicación del archivo **aún está pendiente**; el paquete puede cargarse mediante la interfaz web de GitHub a este directorio para reproducir el pipeline. Ver [resultados verificados](../documentacion/resultados-spark-v2.md).

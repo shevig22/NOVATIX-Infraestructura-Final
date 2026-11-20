@@ -24,3 +24,7 @@
 - NO usar GET con modificaciones, ni generar apuestas o movimientos reales.
 - Resultados de HAProxy 50/50 anteriores solo verifican distribución; no sustituyen latencia, throughput o pruebas de estrés.
 - Registrar resultados brutos y entorno; marcar explícitamente toda prueba no ejecutada.
+
+## Probador incorporado
+
+La primera medición utiliza el script [`carga_segura.py`](carga_segura.py) sobre un solo equipo: `GET /api/equipos/1`, con 1, 10 y 25 solicitudes simultáneas y un máximo de 120 solicitudes por escenario. Ver [instrucciones](README-carga.md). No escalar ni reiniciar servicios en esta primera ronda.
