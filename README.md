@@ -12,6 +12,7 @@ Proyecto académico de microservicios para apuestas deportivas **simuladas**, de
 | Entender el dashboard | [Dashboard Docker/Node.js](dashboard/README.md) |
 | Reconstruir en laboratorio NUEVO | [Guía orientativa con dependencias pendientes](documentacion/reproduccion-paso-a-paso.md) |
 | Evaluar qué es reproducible y qué falta | [**Auditoría profunda del repositorio**](documentacion/auditoria-reproducibilidad-2026-11-20.md) |
+| Ver integración reciente (frontend, paginación, Spark) | [Avances del 20/11/2026 — estados y pendientes](documentacion/avances-frontend-spark-paginacion-2026-11-20.md) |
 | Consultar pruebas | [1 vs 2 réplicas](pruebas/resultados-escalabilidad-2026-11-20.md), [10 vs 20 en JMeter](pruebas/comparativa-jmeter-10-vs-20-2026-11-20.md), [restauración final](pruebas/restauracion-final-20-2026-11-20.md) |
 
 ## Componentes desplegados
