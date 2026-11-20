@@ -56,7 +56,7 @@ Estas verificaciones **no sustituyen** una prueba de carga, latencia o recuperac
 - `infraestructura/`: `Vagrantfile` original recuperado y publicado; todavía faltan los scripts de provisión del software.
 - `haproxy/`: configuración completa del balanceador activo.
 - `microservicios/`: código original de las cinco APIs extraído de las imágenes `shevig2208`, con sus Dockerfiles y lockfiles.
-- `docker-swarm/`: inventario real de 17 servicios y plantilla YAML no probada para redepliegue; `mysql/`: pendientes de incorporar los esquemas SQL.
+- `docker-swarm/`: inventario real de 17 servicios y plantilla YAML no probada para redespliegue; `mysql/`: cinco esquemas SQL normalizados publicados, aún pendientes la importación y los datos de prueba.
 - `diagramas/`, `pruebas/`: diagramas y evidencias.
 
 **Atención:** la configuración del repositorio original [Sant1833/Novatix](https://github.com/Sant1833/Novatix) corresponde a otra topología y **no debe desplegarse sin adaptación** sobre estas máquinas.
