@@ -4,21 +4,21 @@ El servicio desplegado como `novatix_dashboard` en Ubuntu2 escucha desde el host
 
 ## Fuente del código
 
-Los archivos de la interfaz están en el paquete de despliegue original `novatix_dashboards_spark_v2.tar.gz`, **todavía pendiente de incorporar en este directorio**. No confundir con el dashboard del GitHub anterior: aquel consumía `reportes_db` mientras esta versión consume un JSON generado por Spark.
+Los archivos **ya están publicados** en este directorio: `server-v2.js`, `public/index.html`, `public/styles.css`, `public/app.js` y `Dockerfile`. Proceden del paquete de despliegue original `novatix_dashboards_spark_v2.tar.gz` instalado en Ubuntu2. No confundir con el dashboard del GitHub anterior: aquel consumía `reportes_db` mientras esta versión consume un JSON generado por Spark.
 
 Archivos requeridos de ese paquete:
 
 - `server-v2.js` — servidor Node.js de solo lectura.
 - `public/index.html`, `public/styles.css`, `public/app.js` — interfaz del dashboard.
-- `Dockerfile` — receta original que extiende una imagen de pruebas disponible localmente.
+- `Dockerfile` — receta portable basada en `node:22-alpine` para construir desde el código publicado.
 - `desplegar.sh` — instalador histórico que reemplazaba los puertos 8090 y 8093; **no ejecutarlo en el diseño final de dashboard único**, requiere revisión previa.
 
 ## Construcción portable propuesta
 
-Esta variante `Dockerfile.portable` usa Node 22 y los módulos estándar sin depender de la imagen local antigua. **No se ha validado en el clúster**; ejecutar pruebas de construcción antes de adoptarla. Se conserva la receta original en la instalación local para comparar.
+El `Dockerfile` utiliza Node 22 y módulos estándar sin depender de la imagen local antigua. **Este Dockerfile portable no ha sido validado en el clúster**; construir y probar antes de utilizarlo como reemplazo de la versión que funciona. `Dockerfile.portable` se conserva como alternativa equivalente. Se conserva la receta original en la instalación local para comparar.
 
 ```sh
-docker build -f Dockerfile.portable -t novatix-dashboard:spark-v2-portable .
+docker build -t novatix-dashboard:spark-v2-portable .
 ```
 
 El contenedor requiere acceso de solo lectura al JSON mediante un bind mount en `/resultados/reporte_novatix_v2.json`.

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#091225">
+  <meta name="description" content="NOVATIX | Analítica distribuida Apache Spark V2">
+  <title>NOVATIX · Spark Analytics V2</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="NOVATIX inicio"><span class="brand-symbol">N<span>✦</span></span><span><b>NOVATIX</b><small>SPARK INTELLIGENCE</small></span></a>
+      <div class="side-label">ESPACIO DE ANÁLISIS</div>
+      <nav class="navigation" aria-label="Secciones">
+        <button class="nav active" data-page="panorama"><span class="nav-icon">◈</span> Panorama general</button>
+        <button class="nav" data-page="apuestas"><span class="nav-icon">◷</span> Apuestas y tendencias</button>
+        <button class="nav" data-page="ligas"><span class="nav-icon">▥</span> Ligas y equipos</button>
+        <button class="nav" data-page="operacion"><span class="nav-icon">⌁</span> Movimientos y usuarios</button>
+        <button class="nav" data-page="spark"><span class="nav-icon">⬡</span> Arquitectura Spark</button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="spark-spotlight"><span class="glow-dot"></span><small>PROCESAMIENTO ANALÍTICO</small><strong>Apache Spark 3.5.9</strong><p>Resultados distribuidos y consolidados a partir de cinco archivos CSV.</p></div>
+      <div class="side-foot">Proyecto académico · 2026<br><span>Infraestructura de 3 nodos</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="breadcrumbs">NOVATIX <span>/</span> <b id="crumb">Panorama general</b></div><div class="topbar-actions"><span class="status-chip"><i></i><span id="status">Consultando reporte…</span></span><button id="refresh" class="button icon-button" title="Actualizar datos" aria-label="Actualizar datos">↻</button></div></header>
+      <div class="content">
+        <section class="hero">
+          <div class="hero-text"><div class="eyebrow"><span class="mini-star">✦</span> INTELIGENCIA DE DATOS · SPARK V2</div><h1 id="headline">El juego detrás<br>de los datos<span>.</span></h1><p id="hero-sub">Análisis de apuestas deportivas, tendencias, ligas y operación con procesamiento distribuido.</p><div class="hero-foot"><span class="pill">◉ 5 conjuntos de datos</span><span class="pill">◇ 2 ejecutores observados</span><span class="pill">▤ 11 análisis</span></div></div>
+          <div class="hero-graphic" aria-hidden="true"><div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div><div class="orb">✦</div><div class="orb-mini one"></div><div class="orb-mini two"></div></div>
+        </section>
+        <section class="controlbar"><div><p class="section-kicker" id="section-overline">VISTA GENERAL</p><h2 id="section-title">Resumen de indicadores</h2><p class="subtitle" id="section-caption">Agregados producidos por Apache Spark sobre CSV sintéticos</p></div><div class="tools"><label for="period">Período para gráficos mensuales</label><select id="period"><option value="12">Últimos 12 meses disponibles</option><option value="24">Últimos 24 meses disponibles</option><option value="all">Todo el histórico</option></select><button class="button download" id="download">↓ Exportar resumen CSV</button></div></section>
+        <div id="notice" class="notice" role="status" hidden></div>
+        <div id="view" aria-live="polite"><div class="loading">Cargando indicadores distribuidos de NOVATIX…</div></div>
+        <footer><span>NOVATIX · Apache Spark V2</span><span id="footdate">Información sintética para análisis académico · no es información en tiempo real</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
