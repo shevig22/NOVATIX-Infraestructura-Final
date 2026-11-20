@@ -1,0 +1,37 @@
+name: NOVATIX - integridad del repositorio
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar-materiales:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Obtener codigo
+        uses: actions/checkout@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verificar entrega, relaciones y hashes CSV/frontend
+        run: python3 pruebas/comprobar-entrega.py
+      - name: Sintaxis Python
+        run: |
+          python3 -m py_compile pruebas/comprobar-entrega.py datos/verificar_csv.py datos/preparar_csv_spark.py spark/analisis_novatix_v2.py
+      - name: Sintaxis JavaScript disponible
+        run: |
+          node --check dashboard/server-v2.js
+          node --check frontend/app.js
+          node --check frontend/spark-integracion.js
+          node --check frontend/spark-dashboard-app.js
+      - name: Informar alcance
+        run: |
+          echo "Esta CI valida materiales estaticos, NO certifica Vagrant, MySQL, Docker Swarm, HAProxy ni Spark en vivo."
