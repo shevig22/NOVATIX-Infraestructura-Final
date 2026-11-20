@@ -33,7 +33,7 @@ En `servidorUbuntu2` se editaron las copias locales de:
 
 Frontend real de laboratorio: `/var/www/html2` en `servidorUbuntu1`, con `index.html`, `app.js` y `estilos.css`.
 
-Se aplicó un parche de emergencia **en Ubuntu1, no publicado todavía en este repositorio**:
+Se aplicó un parche de emergencia en Ubuntu1; **los siete archivos exactos del frontend fueron recibidos y posteriormente publicados en [`frontend/`](../frontend/README.md)**. Sus bytes se cotejaron por SHA de objetos Git con el respaldo:
 
 - Se deshabilitó la carga automática inicial de partidos y equipos administrativos.
 - Se agregó el botón «Ver primeros 20 partidos»; la carga se realiza bajo demanda.
@@ -47,10 +47,10 @@ Respaldo realizado: `/var/backups/novatix-integracion-spark/app_antes_optimizar_
 
 Se desplegó en el frontend Apache de Ubuntu1 una sección «📊 Analítica Spark» dentro del panel administrativo:
 
-- `index.html`: tarjeta y botón; iframe que se carga únicamente cuando se pulsa.
-- `spark-integracion.js`: muestra el dashboard al usuario cuyo `usuarioActual.rol` sea `admin`, validación **solamente del cliente**.
-- `spark-dashboard.html`, `spark-dashboard-app.js` y `spark-dashboard-styles.css`: copia de la interfaz del dashboard con rutas adaptadas a NOVATIX.
-- Apache: `/etc/apache2/conf-available/novatix-spark-proxy.conf` redirige `/novatix-spark-api/` a la API del dashboard en Ubuntu2 (8090).
+- [`frontend/index.html`](../frontend/index.html): tarjeta y botón; iframe que se carga únicamente cuando se pulsa.
+- [`frontend/spark-integracion.js`](../frontend/spark-integracion.js): muestra el dashboard al usuario cuyo `usuarioActual.rol` sea `admin`, validación **solamente del cliente**.
+- [`frontend/spark-dashboard.html`](../frontend/spark-dashboard.html), [`frontend/spark-dashboard-app.js`](../frontend/spark-dashboard-app.js) y [`frontend/spark-dashboard-styles.css`](../frontend/spark-dashboard-styles.css): copia original de Ubuntu1 adaptada a NOVATIX.
+- Apache: `/etc/apache2/conf-available/novatix-spark-proxy.conf` redirige `/novatix-spark-api/` a la API del dashboard en Ubuntu2 (8090). Se publicó [ejemplo de esta configuración](../frontend/apache/novatix-spark-proxy.conf), **no** el VirtualHost transaccional completo.
 - S2: Apache `Syntax OK`, y las cuatro rutas de la interfaz y API devolvieron HTTP 200. **Queda pendiente la verificación visual completa en navegador**.
 
 **Advertencia de seguridad:** no hay autorización del lado del servidor para los activos y el endpoint Spark. `localStorage` es modificable y el dashboard de Ubuntu2 expone acceso directo por el puerto 8090. **No describir esta función como acceso seguro exclusivo de administradores**. Antes de exposición en redes no confiables, implementar una sesión verificable del lado del servidor, restringir los endpoints y cerrar accesos directos; además, corregir el registro de usuarios que acepta el rol remitido por el cliente.
@@ -59,8 +59,8 @@ Respaldo S2: `/var/backups/novatix-integracion-spark/spark_s2_20261120_145053/`.
 
 ## 4. Trabajo pendiente prioritario
 
-1. Sincronizar al repositorio los cambios reales del backend desde Ubuntu2, revisando previamente el diff y excluyendo secretos, respaldos y archivos generados.
-2. Publicar la fuente real del frontend de Ubuntu1 de forma saneada; la carpeta `/var/www/html2` no estaba versionada en este repositorio.
+1. Sincronizar al repositorio el commit local `a2dbe75` del backend en Ubuntu2. El push HTTPS devolvió 403; el parche local generado es `/home/vagrant/novatix-paginacion.patch` y aún no se ha recibido adjunto.
+2. El frontend Ubuntu1 **ya está publicado y verificado por hashes**; falta capturar el VirtualHost original para reproducir todas las rutas de Apache/HAProxy. No subir credenciales ni secretos.
 3. Probar las consultas paginadas contra MySQL real sin modificar registros; desplegar imágenes con etiquetas nuevas disponibles en ambos nodos y con posibilidad de rollback.
 4. Adaptar la administración de equipos para buscar/seleccionar sin descargar todos; confirmar paginación en la API ya desplegada.
 5. Implementar **autenticación y autorización verificable en servidor** antes de declarar el dashboard privado.
