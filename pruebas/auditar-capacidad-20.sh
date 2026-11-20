@@ -24,9 +24,28 @@ else
   echo "=== CINCO API: REPLICAS Y LIMITES ==="
   for svc in usuarios equipos partidos apuestas dinero; do
     nombre="novatix_stack_$svc"
-    sudo -n docker service inspect "$nombre" \
-      --format 'SERVICIO={{.Spec.Name}} REPLICAS={{.Spec.Mode.Replicated.Replicas}} MAX_POR_NODO={{.Spec.TaskTemplate.Placement.MaxReplicas}} LIMITE_MEM={{.Spec.TaskTemplate.Resources.Limits.MemoryBytes}} RESERVA_MEM={{.Spec.TaskTemplate.Resources.Reservations.MemoryBytes}}' \
-      2>/dev/null || echo "ERROR=INSPECCION_$svc"
+    if sudo -n docker service inspect "$nombre" | python3 -c '
+import json
+import sys
+d = json.load(sys.stdin)[0]
+s = d["Spec"]
+t = s.get("TaskTemplate") or {}
+placement = t.get("Placement") or {}
+resources = t.get("Resources") or {}
+limits = resources.get("Limits") or {}
+reservations = resources.get("Reservations") or {}
+print("SERVICIO={} REPLICAS={} MAX_POR_NODO={} LIMITE_MEM={} RESERVA_MEM={}".format(
+    s["Name"],
+    (s.get("Mode") or {}).get("Replicated", {}).get("Replicas", "NO_DEFINIDO"),
+    placement.get("MaxReplicas", "NO_DEFINIDO"),
+    limits.get("MemoryBytes", "NO_DEFINIDO"),
+    reservations.get("MemoryBytes", "NO_DEFINIDO")
+))
+'; then
+      :
+    else
+      echo "ERROR=INSPECCION_$svc"
+    fi
     sudo -n docker service ps "$nombre" --filter desired-state=running \
       --format 'TAREA={{.Name}} NODO={{.Node}} ESTADO={{.CurrentState}}' \
       2>/dev/null || echo "ERROR=TAREAS_$svc"
