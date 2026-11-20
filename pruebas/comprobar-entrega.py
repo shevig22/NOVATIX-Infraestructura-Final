@@ -29,7 +29,8 @@ OBLIGATORIOS = {
                            "index.html", "app.js", "estilos.css",
                            "spark-integracion.js", "spark-dashboard.html",
                            "spark-dashboard-app.js", "spark-dashboard-styles.css")],
-    "Configuración de ejemplo Apache": ["frontend/apache/novatix-spark-proxy.conf"],
+    "Configuración de ejemplo Apache": ["frontend/apache/novatix-spark-proxy.conf",
+                                        "frontend/apache/novatix-laboratorio.conf"],
     "Documentación": ["README.md", "documentacion/reproduccion-paso-a-paso.md"],
 }
 # Huellas SHA-256 obtenidas del respaldo aportado por Ubuntu1, 20/11/2026.
