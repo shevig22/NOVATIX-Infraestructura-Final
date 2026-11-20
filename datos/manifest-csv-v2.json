@@ -1,0 +1,93 @@
+{
+  "proyecto": "NOVATIX",
+  "version": "spark-v2",
+  "tipo": "inventario de metadatos (sin filas de datos)",
+  "origen_evidencia": "Inspeccion de solo lectura sobre /vagrant/novatix_spark_datos en servidorUbuntu2",
+  "fecha_reporte_spark_utc": "2026-11-19T23:23:43.714586+00:00",
+  "version_spark": "3.5.9",
+  "distribucion_observada": true,
+  "filas_totales": 130324,
+  "partidos_finalizados_reportados": 88958,
+  "dataset_origen_declarado_por_equipo": "https://www.kaggle.com/datasets/davidcariboo/player-scores",
+  "nota_procedencia": "El equipo declara fuente futbolística Kaggle y registros complementarios generados; la ruta de transformación exacta no se ha recuperado ni verificado.",
+  "archivos": [
+    {
+      "nombre": "usuarios.csv",
+      "filas": 500,
+      "columnas": [
+        "id",
+        "fecha_registro",
+        "estado",
+        "rol"
+      ],
+      "sha256": "7361d528bc36ab79cedc73907a498979fb9635946c18cd8f9a1c7b2033bf0432"
+    },
+    {
+      "nombre": "equipos.csv",
+      "filas": 3277,
+      "columnas": [
+        "id",
+        "nombre",
+        "pais",
+        "liga",
+        "escudo",
+        "estado"
+      ],
+      "sha256": "8299902074663ce376951b39a9aa481ae861f0faad1e04f2d6a073725be22b6e"
+    },
+    {
+      "nombre": "partidos.csv",
+      "filas": 88958,
+      "columnas": [
+        "id",
+        "id_equipo_local",
+        "id_equipo_visitante",
+        "equipo_local_nombre",
+        "equipo_visitante_nombre",
+        "escudo_local",
+        "escudo_visitante",
+        "fecha_partido",
+        "cuota_local",
+        "cuota_empate",
+        "cuota_visitante",
+        "goles_local",
+        "goles_visitante",
+        "estado"
+      ],
+      "sha256": "fa541b4d9df8ea888f154af441c8447191193c1f90d8b4669eee418d05dd6673"
+    },
+    {
+      "nombre": "apuestas.csv",
+      "filas": 14770,
+      "columnas": [
+        "id",
+        "user_id",
+        "part_id",
+        "equipo_id",
+        "dinero_apostado",
+        "cuota",
+        "resultado",
+        "fecha_apuesta"
+      ],
+      "sha256": "b5830923d2cb4d69b3d8e1c05a2c9bc455f781a1d7451f873b223a60c930b0f2"
+    },
+    {
+      "nombre": "dinero.csv",
+      "filas": 22819,
+      "columnas": [
+        "id",
+        "id_usuario",
+        "saldo_real",
+        "saldo_congelado",
+        "saldo_disponible",
+        "tipo",
+        "monto",
+        "saldo_antes",
+        "saldo_despues",
+        "fecha_transaccion",
+        "estado"
+      ],
+      "sha256": "82c25c75c4e5f17aa4025d7571ae7f793927c96943ac56201222f5695523424a"
+    }
+  ]
+}

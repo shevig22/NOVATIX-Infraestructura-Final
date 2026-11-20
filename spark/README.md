@@ -4,7 +4,9 @@ Código PySpark que se ejecutó en el clúster de 3 nodos y produjo el reporte V
 
 ## Datos de entrada
 
-El script `analisis_novatix_v2.py` lee, desde `/datos`, estos CSV sintéticos: `usuarios.csv`, `equipos.csv`, `partidos.csv`, `apuestas.csv` y `dinero.csv`. El CSV de usuarios utilizado en el clúster contiene solamente los campos analíticos necesarios (no contraseñas).
+El script `analisis_novatix_v2.py` lee, desde `/datos`, estos cinco CSV preparados (datos futbolísticos de referencia y datos complementarios simulados, según el equipo): `usuarios.csv`, `equipos.csv`, `partidos.csv`, `apuestas.csv` y `dinero.csv`. El CSV de usuarios utilizado en el clúster contiene solamente los campos analíticos necesarios (no contraseñas).
+
+Consulta el [inventario verificado de los CSV](../datos/README.md) con cantidad de filas, campos y SHA-256. Los CSV originales todavía no forman parte del repositorio.
 
 ## Salida
 
